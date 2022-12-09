@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Draw from '../components/draw/draw.component';
 import EventForm from '../components/event-form/event-form.component';
 import GroupForm from '../components/group-form/group-form.component';
+import Welcome from '../components/welcome/welcome.component';
 
 const Home = () => {
 	// const [events, setEvents] = useState([]);
@@ -27,6 +28,7 @@ const Home = () => {
 	return (
 		<>
 			<div className='main-form-container'>
+				<Welcome id='welcome' />
 				<EventForm id='eventf' />
 				<GroupForm id='groupf' />
 				<Draw id='draw' />

@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
+import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
+import './wishlist-form.styles.scss';
 
 const WishlistForm = () => {
 	const blankFormFields = { wishlistName: '' };
-
+	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const { setWishlist } = useContext(WishlistContext);
 
@@ -21,6 +23,7 @@ const WishlistForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 		try {
 			const data = await axios.post(`http://localhost:4000/api/v1/wishlists`, {
 				name: formFields['wishlistName'],
@@ -28,6 +31,7 @@ const WishlistForm = () => {
 			setWishlist(data.data);
 			resetFormFields();
 			window.alert('created!');
+			setIsLoading(false);
 		} catch (err) {
 			console.error(err);
 		}

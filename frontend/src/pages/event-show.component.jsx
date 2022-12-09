@@ -8,6 +8,8 @@ const EventShow = () => {
 	const [secretEvent, setSecretEvent] = useState(null);
 	const [eventMembers, setEventMembers] = useState([]);
 	const [giftReceiver, setGiftReceiver] = useState(null);
+	const [recWishlist, setRecWishlist] = useState(null);
+	const [isVisible, setIsVisible] = useState(false);
 	const params = useParams();
 
 	const getEvent = async () => {
@@ -21,8 +23,14 @@ const EventShow = () => {
 		);
 		setSecretEvent(data.data[0]);
 		setEventMembers(data.data[1]);
-		setGiftReceiver(data.data[2]);
+		setGiftReceiver(data.data[2].receiver);
+		setRecWishlist(data.data[2].rec_wishlist);
 	};
+
+	const onClickWishlist = () => {
+		setIsVisible(true);
+	};
+
 	useEffect(() => {
 		getEvent();
 	}, []);
@@ -46,7 +54,20 @@ const EventShow = () => {
 						<div>
 							<h3>Lucky receiver of your gift:</h3>
 							<h4>{giftReceiver.name}</h4>
-							<Link>Check their wishlist</Link>
+							{!isVisible ? (
+								<Link onClick={onClickWishlist}>Check their wishlist</Link>
+							) : (
+								<>
+									<h1>Their wishlist:</h1>
+									<div>
+										{!!recWishlist.length ? (
+											recWishlist.map((gift) => <p>{gift.name}</p>)
+										) : (
+											<h3>Nothing here yet!</h3>
+										)}
+									</div>
+								</>
+							)}
 						</div>
 					)}
 				</div>

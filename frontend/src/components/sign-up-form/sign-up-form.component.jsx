@@ -41,7 +41,6 @@ const SignUpForm = () => {
 					password_confirmation: confirmPassword,
 				},
 			});
-			console.log(data.headers.authorization);
 			localStorage.setItem('authToken', data.headers.authorization);
 			setAuthToken(data.headers.authorization);
 			localStorage.setItem('user', JSON.stringify(data.data.user));

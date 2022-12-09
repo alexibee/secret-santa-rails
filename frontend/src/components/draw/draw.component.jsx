@@ -60,6 +60,7 @@ const Draw = () => {
 			} catch (error) {
 				console.error(error);
 			}
+			alert("It's done!");
 			setPageNr(0);
 		});
 		console.log(responses);

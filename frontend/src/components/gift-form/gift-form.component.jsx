@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -9,7 +10,7 @@ const GiftForm = () => {
 
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const { setGift } = useContext(WishlistContext);
-
+	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
@@ -21,12 +22,14 @@ const GiftForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 		try {
 			const data = await axios.post(`http://localhost:4000/api/v1/gifts`, {
 				name: formFields['giftName'],
 			});
 			setGift(data.data[0]);
 			resetFormFields();
+			setIsLoading(false);
 		} catch (err) {
 			console.error(err);
 		}

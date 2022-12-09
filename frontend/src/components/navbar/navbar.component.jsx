@@ -37,9 +37,9 @@ const Navbar = () => {
 		});
 	};
 	return (
-		<div className='navbar'>
-			<a href='/'>Home</a>
-			{!!userInfo.id && (
+		!!userInfo.id && (
+			<div className='navbar'>
+				<a href='/'>Home</a>
 				<div>
 					<Link
 						className='nav-right'
@@ -60,8 +60,8 @@ const Navbar = () => {
 						Sign out
 					</button>
 				</div>
-			)}
-		</div>
+			</div>
+		)
 	);
 };
 

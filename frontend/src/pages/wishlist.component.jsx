@@ -5,12 +5,13 @@ import WishlistForm from '../components/wishlist-form/wishlist-form.component';
 import { AuthContext } from '../contexts/auth.context';
 import { WishlistContext } from '../contexts/wishlist.context';
 import { Link } from 'react-router-dom';
+import { LoadingContext } from '../contexts/loading.context';
 
 const Wishlist = () => {
 	const { authToken } = useContext(AuthContext);
 	const [ownWishlist, setOwnWishlist] = useState(null);
 	const [giftWishes, setGiftWishes] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const { gift } = useContext(WishlistContext);
 
 	const getWishlist = async () => {
@@ -25,6 +26,7 @@ const Wishlist = () => {
 			);
 			setOwnWishlist(data.data[0]);
 			setGiftWishes(data.data[1]);
+			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -47,6 +49,7 @@ const Wishlist = () => {
 			console.error(error);
 		}
 	};
+	useEffect(() => {}, []);
 
 	useEffect(() => {
 		getWishlist();
@@ -55,7 +58,7 @@ const Wishlist = () => {
 	return (
 		<div>
 			{!!ownWishlist ? (
-				<div>
+				<div className='wishlist-container'>
 					<h1>{ownWishlist.name}:</h1>
 					{!giftWishes.length ? (
 						<div> Your list is empty</div>
@@ -71,10 +74,10 @@ const Wishlist = () => {
 							))}
 						</div>
 					)}
-					<GiftForm isLoading={isLoading} />
+					<GiftForm />
 				</div>
 			) : (
-				<div>
+				<div className='wishlist-container'>
 					<h2>You don't have a wishlist yet</h2>
 					<h3>Create one now!</h3>
 					<WishlistForm />

@@ -5,6 +5,7 @@ import { GroupContext } from '../../contexts/group.context';
 import { PageContext } from '../../contexts/page.context';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
+import './group-form.styles.scss';
 
 const GroupForm = () => {
 	const { group, setGroup, members, setMembers } = useContext(GroupContext);
@@ -68,13 +69,6 @@ const GroupForm = () => {
 		}
 	};
 
-	const onClickBack = () => {
-		setPageNr(1);
-	};
-	// const onClickNext = () => {
-	// 	setPageNr(3);
-	// };
-
 	const isRequired = (membNr) => {
 		if (formFields[`memberName${membNr + 1}`]) return true;
 		return false;
@@ -82,44 +76,38 @@ const GroupForm = () => {
 
 	return (
 		<div className={`group-form-container${pageNr !== 2 ? ' d-none' : ''}`}>
-			<h1>Add participants</h1>
-			<form onSubmit={handleSubmit}>
-				{membersCount.map((memb) => {
-					return (
-						<div key={memb}>
-							<FormInput
-								type='text'
-								required={isRequired(memb)}
-								placeholder={`Participant ${memb}`}
-								name={`memberName${memb}`}
-								value={formFields[`memberName${memb}`] || ''}
-								onChange={handleChange}
-							/>
-							<FormInput
-								type='text'
-								placeholder={`Participant ${memb} email`}
-								name={`memberName${memb}Email`}
-								value={formFields[`memberName${memb}Email`] || ''}
-								onChange={handleChange}
-							/>
-						</div>
-					);
-				})}
-				<Button onClick={onClickMoreMembers}>+</Button>
-				{/* <a
-					href='#eventf'
-					onClick={onClickBack}
-				>
-					Back
-				</a>
-				<a
-					href='#'
-					onClick={onClickNext}
-				>
-					Next
-				</a> */}
-				<Button type='submit'>Add!</Button>
-			</form>
+			<div className='group-form-inner'>
+				<h1>Add participants</h1>
+				<form onSubmit={handleSubmit}>
+					{membersCount.map((memb) => {
+						return (
+							<div
+								key={memb}
+								className='participant-line'
+							>
+								<FormInput
+									type='text'
+									label={`Participant ${memb}`}
+									required={isRequired(memb)}
+									placeholder={`Participant ${memb}`}
+									name={`memberName${memb}`}
+									value={formFields[`memberName${memb}`] || ''}
+									onChange={handleChange}
+								/>
+								<FormInput
+									type='text'
+									placeholder={`Participant ${memb} email`}
+									name={`memberName${memb}Email`}
+									value={formFields[`memberName${memb}Email`] || ''}
+									onChange={handleChange}
+								/>
+							</div>
+						);
+					})}
+					<Button onClick={onClickMoreMembers}>+</Button>
+					<Button type='submit'>Add!</Button>
+				</form>
+			</div>
 		</div>
 	);
 };

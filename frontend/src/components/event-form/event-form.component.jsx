@@ -6,6 +6,7 @@ import FormInput from '../form-input/form-input.component';
 import { Link } from 'react-router-dom';
 import { PageContext } from '../../contexts/page.context';
 import { AuthContext } from '../../contexts/auth.context';
+import './event-form.styles.scss';
 
 const EventForm = () => {
 	const { userInfo, setUserInfo } = useContext(AuthContext);
@@ -50,7 +51,7 @@ const EventForm = () => {
 	};
 
 	return (
-		<div className={`event-form-container${pageNr > 1 ? ' d-none' : ''}`}>
+		<div className={`event-form-container${pageNr !== 1 ? ' d-none' : ''}`}>
 			<h1>Create a new event</h1>
 			<form onSubmit={handleSubmit}>
 				<FormInput
@@ -84,12 +85,6 @@ const EventForm = () => {
 					onChange={handleChange}
 					value={location}
 				/>
-				{/* <a
-					href='#groupf'
-					onClick={onClickNext}
-				> */}
-				{/* GO
-				</a> */}
 				<Button type='submit'>Create!</Button>
 			</form>
 		</div>

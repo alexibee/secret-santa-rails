@@ -1,12 +1,8 @@
 .main-form-container {
-	margin: 30px;
+	margin: 0 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-section {
-	padding: 0 200px;
 }
 
 .d-none {
@@ -34,4 +30,16 @@ section {
 		text-decoration: none;
 		margin: 20px;
 	}
+}
+
+.wishlist-container {
+	text-align: center;
+	padding: 100px;
+}
+
+.auth-container {
+	margin: 30px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

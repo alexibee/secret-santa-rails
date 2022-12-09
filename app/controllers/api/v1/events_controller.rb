@@ -16,11 +16,17 @@ class Api::V1::EventsController < ApplicationController
       @pairs = @member.pairs
       @pair = @pairs.find_by(giver_id: @member.id)
       @receiver = @members.find_by(id: @pair.receiver_id)
+      @wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
+      if @wishlist
+        @receivers_gifts = @receivers_wishlist.gifts
+      else
+        @receivers_gifts = []
+      end
     else
       @receiver = nil
     end
 
-    render json: [@event, @members, @receiver]
+    render json: [@event, @members, {receiver: @receiver, rec_wishlist: @receivers_gifts}]
   end
 
   def create

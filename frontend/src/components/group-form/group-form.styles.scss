@@ -1,9 +1,19 @@
 .group-form-container {
+	width: 500px;
+	margin: 20px;
+	text-align: center;
+}
+.group-form-inner {
 	display: flex;
 	flex-direction: column;
-	width: 200px;
-	margin: 20px;
-	h2 {
-		margin: 10px 0;
+	align-items: center;
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
+}
+.participant-line {
+	display: flex;
+	justify-content: space-around;
 }
