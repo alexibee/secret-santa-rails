@@ -39,7 +39,12 @@ const Events = () => {
 			<div>
 				<h1> Events you participate in</h1>
 				{partEvents.map((partEvent) => (
-					<h1 key={partEvent.id}>{partEvent.title}</h1>
+					<Link
+						to={`${partEvent.id}`}
+						key={partEvent.id}
+					>
+						{partEvent.title}
+					</Link>
 				))}
 			</div>
 		</div>

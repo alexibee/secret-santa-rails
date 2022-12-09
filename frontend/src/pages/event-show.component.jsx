@@ -45,7 +45,8 @@ const EventShow = () => {
 					{giftReceiver && (
 						<div>
 							<h3>Lucky receiver of your gift:</h3>
-							<Link>{giftReceiver.name}</Link>
+							<h4>{giftReceiver.name}</h4>
+							<Link>Check their wishlist</Link>
 						</div>
 					)}
 				</div>

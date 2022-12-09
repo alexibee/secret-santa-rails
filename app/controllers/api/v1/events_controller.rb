@@ -17,7 +17,7 @@ class Api::V1::EventsController < ApplicationController
       @pair = @pairs.find_by(giver_id: @member.id)
       @receiver = @members.find_by(id: @pair.receiver_id)
     else
-      @pair = nil
+      @receiver = nil
     end
 
     render json: [@event, @members, @receiver]

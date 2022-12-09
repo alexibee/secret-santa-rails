@@ -1,15 +1,83 @@
-import { useState } from 'react';
-import Button from '../components/button/button.component';
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
+import GiftForm from '../components/gift-form/gift-form.component';
+import WishlistForm from '../components/wishlist-form/wishlist-form.component';
+import { AuthContext } from '../contexts/auth.context';
+import { WishlistContext } from '../contexts/wishlist.context';
+import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
-	const [wishlist, setWishlist] = useState([]);
+	const { authToken } = useContext(AuthContext);
+	const [ownWishlist, setOwnWishlist] = useState(null);
+	const [giftWishes, setGiftWishes] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const { gift } = useContext(WishlistContext);
+
+	const getWishlist = async () => {
+		try {
+			const data = await axios.get(
+				'http://localhost:4000/api/v1/own-wishlist',
+				{
+					headers: {
+						Authorization: authToken,
+					},
+				}
+			);
+			setOwnWishlist(data.data[0]);
+			setGiftWishes(data.data[1]);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const onDeleteClick = (id) => async () => {
+		setIsLoading(true);
+		try {
+			const data = await axios.delete(
+				`http://localhost:4000/api/v1/wishlists/${ownWishlist.id}/wishes/${id}`,
+				{
+					headers: {
+						Authorization: authToken,
+					},
+				}
+			);
+			setIsLoading(false);
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
+		getWishlist();
+	}, [gift, isLoading]);
+
 	return (
 		<div>
-			{wishlist.length ? (
-				<div>wishlist</div>
+			{!!ownWishlist ? (
+				<div>
+					<h1>{ownWishlist.name}:</h1>
+					{!giftWishes.length ? (
+						<div> Your list is empty</div>
+					) : (
+						<div>
+							{giftWishes.map((giftWish) => (
+								<div key={giftWish.gift.id}>
+									<h4>{giftWish.gift.name}</h4>
+									<Link onClick={onDeleteClick(giftWish.wish[0].id)}>
+										Delete gift
+									</Link>
+								</div>
+							))}
+						</div>
+					)}
+					<GiftForm isLoading={isLoading} />
+				</div>
 			) : (
 				<div>
-					<Button>Create Your Wishlist</Button>
+					<h2>You don't have a wishlist yet</h2>
+					<h3>Create one now!</h3>
+					<WishlistForm />
 				</div>
 			)}
 		</div>

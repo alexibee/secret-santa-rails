@@ -7,6 +7,8 @@ import { EventProvider } from './contexts/event.context';
 import { PageProvider } from './contexts/page.context';
 import { GroupProvider } from './contexts/group.context';
 import { AuthProvider } from './contexts/auth.context';
+import Wishlist from './pages/wishlist.component';
+import { WishlistProvider } from './contexts/wishlist.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,9 +17,11 @@ root.render(
 			<PageProvider>
 				<EventProvider>
 					<GroupProvider>
-						<BrowserRouter>
-							<App />
-						</BrowserRouter>
+						<WishlistProvider>
+							<BrowserRouter>
+								<App />
+							</BrowserRouter>
+						</WishlistProvider>
 					</GroupProvider>
 				</EventProvider>
 			</PageProvider>
