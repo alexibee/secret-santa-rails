@@ -1,0 +1,16 @@
+.draw-inner-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100vh;
+}
+
+.draw-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin: 50px auto;
+
+	h6 {
+		font-size: 30px;
+	}
+}

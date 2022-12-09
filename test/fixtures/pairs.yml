@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  member: one
+  member: one
+  group: one
+  exclusion: false
+
+two:
+  member: two
+  member: two
+  group: two
+  exclusion: false

@@ -1,0 +1,37 @@
+.main-form-container {
+	margin: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+section {
+	padding: 0 200px;
+}
+
+.d-none {
+	display: none;
+}
+
+.event-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	a {
+		text-decoration: none;
+		margin: 20px;
+	}
+}
+.event-show-container {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	div {
+		margin: 30px 0;
+		text-align: center;
+	}
+	a {
+		text-decoration: none;
+		margin: 20px;
+	}
+}
