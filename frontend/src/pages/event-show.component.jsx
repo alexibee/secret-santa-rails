@@ -61,7 +61,9 @@ const EventShow = () => {
 									<h1>Their wishlist:</h1>
 									<div>
 										{!!recWishlist.length ? (
-											recWishlist.map((gift) => <p>{gift.name}</p>)
+											recWishlist.map((gift) => (
+												<p key={gift.id}>{gift.name}</p>
+											))
 										) : (
 											<h3>Nothing here yet!</h3>
 										)}

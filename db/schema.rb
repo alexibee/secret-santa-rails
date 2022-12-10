@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
   end
 
   create_table "groups", force: :cascade do |t|
+    t.string "name"
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -81,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
   end
 
   create_table "wishes", force: :cascade do |t|
+    t.string "name"
     t.bigint "wishlist_id", null: false
     t.bigint "gift_id", null: false
     t.datetime "created_at", null: false

@@ -18,8 +18,8 @@ class Api::V1::GroupsController < ApplicationController
       @group = Group.new(event_id: @event.id)
       @members = params_members.map do |member|
         user_id = nil
-        if User.find_by(email: member['email'])
-          @user = User.find_by(email: member['email'])
+        if User.find_by(email: member['email'].downcase)
+          @user = User.find_by(email: member['email'].downcase)
           user_id = @user.id
         end
         @group.members.new(
