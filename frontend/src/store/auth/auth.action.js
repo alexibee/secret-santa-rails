@@ -1,4 +1,9 @@
-import axios from 'axios';
+import {
+	registerUserRequest,
+	signInUserRequest,
+	signInUserWithTokenRequest,
+	signOutUserRequest,
+} from '../../utils/auth.utils';
 import { createAction } from '../../utils/reducer.utils';
 import { AUTH_ACTION_TYPES } from './auth.types';
 
@@ -14,7 +19,7 @@ export const setAuthToken = (authToken) =>
 export const setCurrentUserFail = (error) =>
 	createAction(AUTH_ACTION_TYPES.SET_CURRENT_USER_FAIL, error);
 
-export const resetToInitialState = () =>
+export const resetAuthToInitialState = () =>
 	createAction(AUTH_ACTION_TYPES.RESET_TO_INITIAL_STATE);
 
 export const registerUserAsync = (userInfo) => async (dispatch) => {
@@ -57,7 +62,6 @@ export const signInUserWithTokenAsync = (authToken) => async (dispatch) => {
 		}
 	} catch (error) {
 		dispatch(setCurrentUserFail(error));
-		dispatch(resetToInitialState());
 	}
 };
 
@@ -69,47 +73,6 @@ export const signOutUserAsync = (authToken) => async (dispatch) => {
 		dispatch(setCurrentUserSuccess({ id: null, email: null }));
 	} catch (error) {
 		dispatch(setCurrentUserFail(error));
-		dispatch(resetToInitialState());
+		dispatch(resetAuthToInitialState());
 	}
-};
-
-const BASE_URL = 'http://localhost:4000/';
-
-const registerUserRequest = async (payload) => {
-	const { email, password, confirmPassword } = payload;
-	return await axios.post(`${BASE_URL}users`, {
-		user: {
-			email: email,
-			password: password,
-			password_confirmation: confirmPassword,
-		},
-	});
-};
-
-const signInUserRequest = async (userInfo) => {
-	const { email, password } = userInfo;
-	return await axios.post(`${BASE_URL}users/sign_in`, {
-		user: {
-			email: email,
-			password: password,
-		},
-	});
-};
-
-const signInUserWithTokenRequest = async (authToken) => {
-	const config = {
-		headers: {
-			Authorization: authToken,
-		},
-	};
-	return await axios.get(`${BASE_URL}user-member-data`, config);
-};
-
-const signOutUserRequest = async (authToken) => {
-	const config = {
-		headers: {
-			authorization: authToken,
-		},
-	};
-	await axios.delete(`${BASE_URL}users/sign_out`, config);
 };

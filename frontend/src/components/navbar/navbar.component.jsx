@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.scss';
 import { Link } from 'react-router-dom';
 import { selectAuthToken } from '../../store/auth/auth.selector';
-import { signOutUserAsync } from '../../store/auth/auth.action';
+import {
+	resetAuthToInitialState,
+	signOutUserAsync,
+} from '../../store/auth/auth.action';
+import { setCurrentPage } from '../../store/pagination/pagination.action';
+import { resetEventToInitialState } from '../../store/santa-event/santa-event.action';
 
 const Navbar = () => {
 	const authToken = useSelector(selectAuthToken);
@@ -13,6 +18,9 @@ const Navbar = () => {
 	const onSignOut = async (e) => {
 		e.preventDefault();
 		dispatch(signOutUserAsync(authToken));
+		dispatch(resetAuthToInitialState());
+		dispatch(setCurrentPage(1));
+		dispatch(resetEventToInitialState());
 	};
 	return (
 		!!authToken && (

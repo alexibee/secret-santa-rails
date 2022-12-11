@@ -5,6 +5,7 @@ import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { signInUserAsync } from '../../store/auth/auth.action';
 import { selectAuthError } from '../../store/auth/auth.selector';
+import { useNavigate } from 'react-router-dom';
 
 const blankFormFields = {
 	email: '',
@@ -14,16 +15,13 @@ const blankFormFields = {
 const SignInForm = () => {
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const error = useSelector(selectAuthError);
 	const { email, password } = formFields;
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
-	};
-
-	const resetFormFields = () => {
-		setFormFields(blankFormFields);
 	};
 
 	const handleSubmit = async (event) => {
@@ -33,7 +31,7 @@ const SignInForm = () => {
 			alert('Sign in failed!');
 		} else {
 			alert('Sign in successful!');
-			resetFormFields();
+			navigate('/');
 		}
 	};
 

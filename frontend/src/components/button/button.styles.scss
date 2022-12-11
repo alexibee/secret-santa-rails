@@ -13,13 +13,17 @@
 	font-weight: bolder;
 	border: none;
 	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
 	margin: 15px;
 	&:hover {
 		background-color: rgba(17, 70, 8, 1);
 		color: black;
 		border: 1px solid rgba(14, 50, 8, 0.9);
+	}
+	&:disabled,
+	&[disabled] {
+		border: 1px solid #999999;
+		background-color: #8f8e8e;
+		color: #666666;
 	}
 }

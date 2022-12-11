@@ -1,7 +1,7 @@
 import { PAGINATION_ACTION_TYPES } from './pagination.types';
 
 const PAGINATION_INITIAL_STATE = {
-	currentPage: 0,
+	currentPage: 1,
 	isLoading: true,
 	error: null,
 };

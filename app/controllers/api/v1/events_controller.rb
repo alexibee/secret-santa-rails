@@ -34,12 +34,15 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
-    @event.organiser_id = current_user.id
-    if @event.save
-      render json: @event, status: :created
-    else
-      render json: @event.errors, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      @event = Event.new(event_params[:event])
+      @event.organiser_id = current_user.id
+      if @event.save
+        create_group_and_members
+        render json: @event, status: :created
+      else
+        render json: @event.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -57,16 +60,48 @@ class Api::V1::EventsController < ApplicationController
 
   private
 
+  def create_group_and_members
+    @group = Group.new(event_id: @event.id)
+    @members = event_params[:members].map do |member|
+      user_id = nil
+      email = member['email'] ? member['email'].downcase : ''
+      if User.find_by(email: email)
+        @user = User.find_by(email: email)
+        user_id = @user.id
+      end
+      @group.members.new(
+        name: member['name'],
+        member_nr: member['member_nr'],
+        user_id: user_id
+      )
+    end
+    if @group.save
+      create_pairs
+    else
+      render json: @group.errors, status: :unprocessable_entity
+    end
+  end
+
+  def create_pairs
+    event_params[:pairs].each do |pair|
+      @giver = @group.members.find_by(member_nr: pair['giver_nr'])
+      @receiver = @group.members.find_by(member_nr: pair['receiver_nr'])
+      @pair = Pair.new(group_id: @group.id, giver_id: @giver.id, receiver_id: @receiver.id, exclusion: pair['exclusion'] )
+      if !@pair.save
+        render json: @pair.errors, status: :unprocessable_entity
+      end
+    end
+  end
+
   def set_event
     @event = Event.find(params[:id])
   end
 
   def event_params
     params.require(:event).permit(
-      :title,
-      :description,
-      :location,
-      :date
+      event: [:title, :description, :location, :date],
+      members: [ :name, :member_nr, :email ],
+      pairs: [:giver_nr, :receiver_nr, :exclusion]
     )
   end
 end
