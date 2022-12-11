@@ -1,13 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { EventContext } from '../../contexts/event.context';
-import { selectAuthToken } from '../../store/auth/auth.selector';
 import { setCurrentPage } from '../../store/pagination/pagination.action';
 import { selectCurrentPage } from '../../store/pagination/pagination.selector';
-import {
-	setEventDetails,
-	setShuffledMemberData,
-} from '../../store/santa-event/santa-event.action';
+import { setEventDetails } from '../../store/santa-event/santa-event.action';
 import { selectSantaEventDetails } from '../../store/santa-event/santa-event.selector';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -15,7 +10,6 @@ import './event-step.styles.scss';
 
 const EventStep = () => {
 	const currentPage = useSelector(selectCurrentPage);
-	const authToken = useSelector(selectAuthToken);
 	const dispatch = useDispatch();
 
 	const blankFormFields = {

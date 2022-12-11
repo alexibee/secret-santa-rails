@@ -10,7 +10,7 @@ import { selectAuthToken } from '../../store/auth/auth.selector';
 const WishlistForm = () => {
 	const blankFormFields = { wishlistName: '' };
 	const authToken = useSelector(selectAuthToken);
-	const { isLoading, setIsLoading } = useContext(LoadingContext);
+	const { setIsLoading } = useContext(LoadingContext);
 	const [formFields, setFormFields] = useState(blankFormFields);
 
 	const handleChange = (event) => {

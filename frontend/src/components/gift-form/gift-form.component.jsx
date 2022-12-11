@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
@@ -13,7 +13,7 @@ const GiftForm = () => {
 
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const { setGift } = useContext(WishlistContext);
-	const { isLoading, setIsLoading } = useContext(LoadingContext);
+	const { setIsLoading } = useContext(LoadingContext);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });

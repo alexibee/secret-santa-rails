@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import { EventContext } from '../../contexts/event.context';
-import { GroupContext } from '../../contexts/group.context';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -10,8 +8,6 @@ import { setCurrentPage } from '../../store/pagination/pagination.action';
 import {
 	selectGroupDetails,
 	selectMemberCount,
-	selectMemberData,
-	selectShuffledMemberData,
 } from '../../store/santa-event/santa-event.selector';
 import {
 	setGroupDetails,
