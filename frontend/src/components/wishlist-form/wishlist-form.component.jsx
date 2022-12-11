@@ -2,12 +2,15 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
+import { useSelector } from 'react-redux';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import './wishlist-form.styles.scss';
+import { selectAuthToken } from '../../store/auth/auth.selector';
 
 const WishlistForm = () => {
 	const blankFormFields = { wishlistName: '' };
+	const authToken = useSelector(selectAuthToken);
 	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const { setWishlist } = useContext(WishlistContext);
@@ -25,9 +28,17 @@ const WishlistForm = () => {
 		e.preventDefault();
 		setIsLoading(true);
 		try {
-			const data = await axios.post(`http://localhost:4000/api/v1/wishlists`, {
-				name: formFields['wishlistName'],
-			});
+			const data = await axios.post(
+				`http://localhost:4000/api/v1/wishlists`,
+				{
+					name: formFields['wishlistName'],
+				},
+				{
+					headers: {
+						Authorization: authToken,
+					},
+				}
+			);
 			setWishlist(data.data);
 			resetFormFields();
 			window.alert('created!');

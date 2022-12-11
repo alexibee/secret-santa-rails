@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/auth.context';
+import { useSelector } from 'react-redux';
+import { selectAuthToken } from '../store/auth/auth.selector';
 
 const EventShow = () => {
-	const { authToken } = useContext(AuthContext);
+	const authToken = useSelector(selectAuthToken);
 	const [secretEvent, setSecretEvent] = useState(null);
 	const [eventMembers, setEventMembers] = useState([]);
 	const [giftReceiver, setGiftReceiver] = useState(null);
@@ -13,18 +14,22 @@ const EventShow = () => {
 	const params = useParams();
 
 	const getEvent = async () => {
-		const data = await axios.get(
-			`http://localhost:4000/api/v1/events/${params.event_id}`,
-			{
-				headers: {
-					Authorization: authToken,
-				},
-			}
-		);
-		setSecretEvent(data.data[0]);
-		setEventMembers(data.data[1]);
-		setGiftReceiver(data.data[2].receiver);
-		setRecWishlist(data.data[2].rec_wishlist);
+		try {
+			const data = await axios.get(
+				`http://localhost:4000/api/v1/events/${params.event_id}`,
+				{
+					headers: {
+						Authorization: authToken,
+					},
+				}
+			);
+			setSecretEvent(data.data[0]);
+			setEventMembers(data.data[1]);
+			setGiftReceiver(data.data[2].receiver);
+			setRecWishlist(data.data[2].rec_wishlist);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const onClickWishlist = () => {

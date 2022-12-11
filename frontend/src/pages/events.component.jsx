@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../contexts/auth.context';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectAuthToken } from '../store/auth/auth.selector';
 
 const Events = () => {
 	const [orgEvents, setOrgEvents] = useState([]);
 	const [partEvents, setPartEvents] = useState([]);
-	const { authToken } = useContext(AuthContext);
+	const authToken = useSelector(selectAuthToken);
 
 	const getEvents = async () => {
 		const data = await axios.get('http://localhost:4000/api/v1/events', {

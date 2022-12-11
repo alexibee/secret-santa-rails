@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import './sign-up-form.styles.scss';
-
+import { useDispatch, useSelector } from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-import axios from 'axios';
-import { AuthContext } from '../../contexts/auth.context';
+import { registerUserAsync } from '../../store/auth/auth.action';
+import { selectAuthError } from '../../store/auth/auth.selector';
 
 const blankFormFields = {
 	email: '',
@@ -14,7 +14,8 @@ const blankFormFields = {
 
 const SignUpForm = () => {
 	const [formFields, setFormFields] = useState(blankFormFields);
-	const { setAuthToken, setUserInfo } = useContext(AuthContext);
+	const dispatch = useDispatch();
+	const error = useSelector(selectAuthError);
 	const { email, password, confirmPassword } = formFields;
 
 	const handleChange = (event) => {
@@ -33,22 +34,12 @@ const SignUpForm = () => {
 			alert('Passwords do not match');
 			return;
 		}
-		try {
-			const data = await axios.post('http://localhost:4000/users', {
-				user: {
-					email: email,
-					password: password,
-					password_confirmation: confirmPassword,
-				},
-			});
-			localStorage.setItem('authToken', data.headers.authorization);
-			setAuthToken(data.headers.authorization);
-			localStorage.setItem('user', JSON.stringify(data.data.user));
-			setUserInfo(data.data.user);
+		dispatch(registerUserAsync(formFields));
+		if (error) {
+			alert('Sign up failed!');
+		} else {
+			alert('Sign up successful!');
 			resetFormFields();
-			window.alert('Sign up successful!');
-		} catch (err) {
-			window.alert('Sign up failed!');
 		}
 	};
 

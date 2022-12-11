@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './sign-in-form.styles.scss';
-
+import { useDispatch, useSelector } from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/auth.context';
-import axios from 'axios';
+import { signInUserAsync } from '../../store/auth/auth.action';
+import { selectAuthError } from '../../store/auth/auth.selector';
 
 const blankFormFields = {
 	email: '',
 	password: '',
 };
 
-const SignInForm = ({ googleSignInHandler }) => {
+const SignInForm = () => {
 	const [formFields, setFormFields] = useState(blankFormFields);
-	const { setUserInfo, authToken, setAuthToken } = useContext(AuthContext);
+	const dispatch = useDispatch();
+	const error = useSelector(selectAuthError);
 	const { email, password } = formFields;
 
 	const handleChange = (event) => {
@@ -28,23 +28,12 @@ const SignInForm = ({ googleSignInHandler }) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		try {
-			const data = await axios.post('http://localhost:4000/users/sign_in', {
-				user: {
-					email: email,
-					password: password,
-				},
-			});
-			console.log(data.headers.authorization);
-			localStorage.setItem('authToken', data.headers.authorization);
-			setAuthToken(data.headers.authorization);
-			localStorage.setItem('user', JSON.stringify(data.data.user));
-			setUserInfo(data.data.user);
+		dispatch(signInUserAsync(formFields));
+		if (error) {
+			alert('Sign in failed!');
+		} else {
+			alert('Sign in successful!');
 			resetFormFields();
-			window.alert('Sign in successful');
-		} catch (err) {
-			console.error(err);
-			window.alert('Sign in failed!');
 		}
 	};
 

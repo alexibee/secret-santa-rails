@@ -13,17 +13,15 @@ class Api::V1::WishlistsController < ApplicationController
 
   def show_own
     @wishlist = Wishlist.find_by(user_id: current_user.id)
-    @gifts = Gift.includes(:wishes).where(wishes: {wishlist_id: @wishlist.id})
-    @gift_wishes = @gifts.map do |gift|
-      {gift: gift, wish: gift.wishes}
+    if @wishlist
+      @gifts = Gift.includes(:wishes).where(wishes: {wishlist_id: @wishlist.id})
+      @gift_wishes = @gifts.map do |gift|
+        {gift: gift, wish: gift.wishes}
+      end
+    else
+      @wishlist = nil
     end
-    @wishes = nil
-    # @wishes = Wishlist.includes(:wishes).find_by(user_id: current_user.id)
-    # @wishes = Wish.includes(:gift).where(wishlist_id: @wishlist.id)
-    # @gifts = Gift.join(:wishes).where(id: :gift_id)
-    # @wishes = Gift.includes(:wishes).joins(:wishlist).where()
-
-    render json: [@wishlist, @gift_wishes]
+    render json: [@wishlist, @gift_wishes], status: :ok
   end
 
   private
@@ -33,9 +31,4 @@ class Api::V1::WishlistsController < ApplicationController
       :name
     )
   end
-
-  def set_wishlist
-    @wishlist = Wishlist.find(params[:id])
-  end
-
 end

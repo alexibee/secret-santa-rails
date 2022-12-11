@@ -6,31 +6,36 @@ class Api::V1::EventsController < ApplicationController
 
     @part_events = Event.joins(:members).where(members: { user_id: current_user.id })
 
-    render json: {org_events: @org_events, part_events: @part_events}
+    render json: {org_events: @org_events, part_events: @part_events}, status: :ok
   end
 
   def show
-    @members = @event.members
-    @member = @members.find_by(user_id: current_user.id)
-    if @member
-      @pairs = @member.pairs
-      @pair = @pairs.find_by(giver_id: @member.id)
-      @receiver = @members.find_by(id: @pair.receiver_id)
-      @receivers_wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
-      if @receivers_wishlist
-        @receivers_gifts = @receivers_wishlist.gifts
+    if @event.organiser_id == current_user.id || @event.members.find_by(user_id: current_user.id)
+      @members = @event.members
+      @member = @members.find_by(user_id: current_user.id)
+      if @member
+        @pairs = @member.pairs
+        @pair = @pairs.find_by(giver_id: @member.id)
+        @receiver = @members.find_by(id: @pair.receiver_id)
+        @receivers_wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
+        if @receivers_wishlist
+          @receivers_gifts = @receivers_wishlist.gifts
+        else
+          @receivers_gifts = []
+        end
       else
-        @receivers_gifts = []
+        @receiver = nil
       end
+      render json: [@event, @members, {receiver: @receiver, rec_wishlist: @receivers_gifts}], status: :ok
     else
-      @receiver = nil
+      render json: {error: {message: 'Unauthorized'}}, status: :unauthorized
     end
 
-    render json: [@event, @members, {receiver: @receiver, rec_wishlist: @receivers_gifts}]
   end
 
   def create
     @event = Event.new(event_params)
+    @event.organiser_id = current_user.id
     if @event.save
       render json: @event, status: :created
     else
@@ -61,8 +66,7 @@ class Api::V1::EventsController < ApplicationController
       :title,
       :description,
       :location,
-      :date,
-      :organiser_id
+      :date
     )
   end
 end

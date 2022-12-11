@@ -1,15 +1,12 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { EventContext } from '../../contexts/event.context';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
-import { Link } from 'react-router-dom';
 import { PageContext } from '../../contexts/page.context';
-import { AuthContext } from '../../contexts/auth.context';
 import './event-form.styles.scss';
 
 const EventForm = () => {
-	const { userInfo, setUserInfo } = useContext(AuthContext);
 	const { santaEvent, setSantaEvent } = useContext(EventContext);
 	const { pageNr, setPageNr } = useContext(PageContext);
 
@@ -39,7 +36,6 @@ const EventForm = () => {
 				date: date,
 				location: location,
 				description: description,
-				organiser_id: userInfo.id,
 			});
 			setSantaEvent(data);
 			resetFormFields();

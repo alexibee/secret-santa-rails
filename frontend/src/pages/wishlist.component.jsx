@@ -2,17 +2,18 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import GiftForm from '../components/gift-form/gift-form.component';
 import WishlistForm from '../components/wishlist-form/wishlist-form.component';
-import { AuthContext } from '../contexts/auth.context';
 import { WishlistContext } from '../contexts/wishlist.context';
 import { Link } from 'react-router-dom';
 import { LoadingContext } from '../contexts/loading.context';
+import { selectAuthToken } from '../store/auth/auth.selector';
+import { useSelector } from 'react-redux';
 
 const Wishlist = () => {
-	const { authToken } = useContext(AuthContext);
 	const [ownWishlist, setOwnWishlist] = useState(null);
 	const [giftWishes, setGiftWishes] = useState([]);
 	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const { gift } = useContext(WishlistContext);
+	const authToken = useSelector(selectAuthToken);
 
 	const getWishlist = async () => {
 		try {
@@ -26,7 +27,6 @@ const Wishlist = () => {
 			);
 			setOwnWishlist(data.data[0]);
 			setGiftWishes(data.data[1]);
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}

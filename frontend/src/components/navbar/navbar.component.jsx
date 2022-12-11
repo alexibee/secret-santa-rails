@@ -1,43 +1,21 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../../contexts/auth.context';
+import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.scss';
 import { Link } from 'react-router-dom';
+import { selectAuthToken } from '../../store/auth/auth.selector';
+import { signOutUserAsync } from '../../store/auth/auth.action';
 
 const Navbar = () => {
-	const { setUserInfo, setAuthToken, authToken, userInfo } =
-		useContext(AuthContext);
+	const authToken = useSelector(selectAuthToken);
+	const dispatch = useDispatch();
 
 	const onSignOut = async (e) => {
 		e.preventDefault();
-		try {
-			await axios.delete('http://localhost:4000/users/sign_out', {
-				headers: {
-					Authorization: authToken,
-				},
-			});
-			alert('Success!');
-		} catch (e) {
-			console.error(e);
-		}
-		localStorage.setItem('authToken', '');
-		setAuthToken('');
-		localStorage.setItem(
-			'user',
-			JSON.stringify({
-				id: null,
-				username: null,
-				email: null,
-			})
-		);
-		setUserInfo({
-			id: null,
-			username: null,
-			email: null,
-		});
+		dispatch(signOutUserAsync(authToken));
 	};
 	return (
-		!!userInfo.id && (
+		!!authToken && (
 			<div className='navbar'>
 				<a href='/'>Home</a>
 				<div>

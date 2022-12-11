@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
+import { selectAuthToken } from '../../store/auth/auth.selector';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
 const GiftForm = () => {
+	const authToken = useSelector(selectAuthToken);
 	const blankFormFields = { giftName: '' };
 
 	const [formFields, setFormFields] = useState(blankFormFields);
@@ -24,9 +27,17 @@ const GiftForm = () => {
 		e.preventDefault();
 		setIsLoading(true);
 		try {
-			const data = await axios.post(`http://localhost:4000/api/v1/gifts`, {
-				name: formFields['giftName'],
-			});
+			const data = await axios.post(
+				`http://localhost:4000/api/v1/gifts`,
+				{
+					name: formFields['giftName'],
+				},
+				{
+					headers: {
+						Authorization: authToken,
+					},
+				}
+			);
 			setGift(data.data[0]);
 			resetFormFields();
 			setIsLoading(false);
