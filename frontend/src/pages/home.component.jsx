@@ -29,9 +29,11 @@ const Home = () => {
 		<>
 			<div className='main-form-container'>
 				<Welcome id='welcome' />
-				<EventForm id='eventf' />
-				<GroupForm id='groupf' />
-				<Draw id='draw' />
+				<form>
+					<EventForm id='eventf' />
+					<GroupForm id='groupf' />
+					<Draw id='draw' />
+				</form>
 			</div>
 			{/* <Link> Your wishlist </Link> */}
 		</>

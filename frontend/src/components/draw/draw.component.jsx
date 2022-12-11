@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { EventContext } from '../../contexts/event.context';
 import { GroupContext } from '../../contexts/group.context';
-import { PageContext } from '../../contexts/page.context';
+import { setCurrentPage } from '../../store/pagination/pagination.action';
+import { selectCurrentPage } from '../../store/pagination/pagination.selector';
 import Button from '../button/button.component';
 import './draw.styles.scss';
 
 const Draw = () => {
-	const { pageNr, setPageNr } = useContext(PageContext);
+	const currentPage = useSelector(selectCurrentPage);
+	const dispatch = useDispatch();
 	const { santaEvent, setSantaEvent } = useContext(EventContext);
 	const { members, group } = useContext(GroupContext);
 	const [shuffledMembers, setShuffledMembers] = useState([]);
@@ -61,7 +64,7 @@ const Draw = () => {
 				console.error(error);
 			}
 			alert("It's done!");
-			setPageNr(0);
+			dispatch(setCurrentPage(0));
 		});
 		console.log(responses);
 		// try {
@@ -77,7 +80,7 @@ const Draw = () => {
 	};
 
 	return (
-		<div className={`draw-container${pageNr !== 3 ? ' d-none' : ''}`}>
+		<div className={`draw-container${currentPage !== 3 ? ' d-none' : ''}`}>
 			<div className='draw-inner-container'>
 				<div className='draw-grid'>
 					<div>

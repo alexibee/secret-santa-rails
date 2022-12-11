@@ -5,10 +5,11 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import { authReducer } from './auth/auth.reducer';
+import { paginationReducer } from './pagination/pagination.reducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
-	// pagination: paginationReducer,
+	pagination: paginationReducer,
 	// santaEvent: santaEventReducer,
 });
 

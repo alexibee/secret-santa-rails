@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { LoadingContext } from '../../contexts/loading.context';
-import { WishlistContext } from '../../contexts/wishlist.context';
 import { useSelector } from 'react-redux';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -13,7 +12,6 @@ const WishlistForm = () => {
 	const authToken = useSelector(selectAuthToken);
 	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const [formFields, setFormFields] = useState(blankFormFields);
-	const { setWishlist } = useContext(WishlistContext);
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -39,7 +37,6 @@ const WishlistForm = () => {
 					},
 				}
 			);
-			setWishlist(data.data);
 			resetFormFields();
 			window.alert('created!');
 			setIsLoading(false);

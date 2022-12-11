@@ -2,14 +2,17 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { EventContext } from '../../contexts/event.context';
 import { GroupContext } from '../../contexts/group.context';
-import { PageContext } from '../../contexts/page.context';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import './group-form.styles.scss';
+import { selectCurrentPage } from '../../store/pagination/pagination.selector';
+import { setCurrentPage } from '../../store/pagination/pagination.action';
 
 const GroupForm = () => {
-	const { group, setGroup, members, setMembers } = useContext(GroupContext);
-	const { pageNr, setPageNr } = useContext(PageContext);
+	const dispatch = useDispatch();
+	const currentPage = useSelector(selectCurrentPage);
+	const { setGroup, setMembers } = useContext(GroupContext);
 	const { santaEvent } = useContext(EventContext);
 	const [membersCount, setMembersCount] = useState([1, 2, 3, 4, 5]);
 	const blankFormFields = {};
@@ -63,7 +66,7 @@ const GroupForm = () => {
 			setMembers(data[1]);
 			resetFormFields();
 			window.alert('created!');
-			setPageNr(3);
+			dispatch(setCurrentPage(3));
 		} catch (err) {
 			console.error(err);
 		}
@@ -75,7 +78,9 @@ const GroupForm = () => {
 	};
 
 	return (
-		<div className={`group-form-container${pageNr !== 2 ? ' d-none' : ''}`}>
+		<div
+			className={`group-form-container${currentPage !== 2 ? ' d-none' : ''}`}
+		>
 			<div className='group-form-inner'>
 				<h1>Add participants</h1>
 				<form onSubmit={handleSubmit}>
