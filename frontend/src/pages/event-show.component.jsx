@@ -23,10 +23,10 @@ const EventShow = () => {
 					},
 				}
 			);
-			setSecretEvent(data.data[0]);
-			setEventMembers(data.data[1]);
-			setGiftReceiver(data.data[2].receiver);
-			setRecWishlist(data.data[2].rec_wishlist);
+			setSecretEvent(data.data.event);
+			setEventMembers(data.data.members);
+			setGiftReceiver(data.data.receiver_data.receiver);
+			setRecWishlist(data.data.receiver_data.rec_wishlist);
 		} catch (error) {
 			console.log(error);
 		}
@@ -44,19 +44,19 @@ const EventShow = () => {
 		<>
 			{secretEvent && (
 				<div className='event-show-container'>
-					<div>
+					<div className='headers-container'>
 						<h1>Event: {secretEvent.title}</h1>
 						<h2>Date: {secretEvent.date}</h2>
 						<h2>Location: {secretEvent.location}</h2>
 					</div>
-					<div>
+					<div className='participants-container'>
 						<h3>Participants of the event:</h3>
 						{eventMembers.map((eventMember) => (
 							<h4 key={eventMember.id}> {eventMember.name}</h4>
 						))}
 					</div>
 					{giftReceiver && (
-						<div>
+						<div className='receiver-info'>
 							<h3>Lucky receiver of your gift:</h3>
 							<h4>{giftReceiver.name}</h4>
 							{!isVisible ? (

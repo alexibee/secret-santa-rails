@@ -48,10 +48,6 @@ const DrawStep = () => {
 		return;
 	};
 
-	useEffect(() => {
-		dispatch(setShuffledMemberData([]));
-	}, []);
-
 	const onClickShuffleAndCheck = (e) => {
 		e.preventDefault();
 		shuffleAndCheck();
@@ -67,20 +63,32 @@ const DrawStep = () => {
 			<div className='draw-inner-container'>
 				<div className='draw-grid'>
 					<div>
-						<h1>Secret Santas:</h1>
+						<h2>Secret Santas:</h2>
 						{memberData.map((member, ind) => (
-							<h6 key={ind}> {member.name}</h6>
+							<div
+								className='grid-cell'
+								key={ind}
+							>
+								<h6>{member.name}</h6>
+							</div>
 						))}
 					</div>
 					<div>
-						<h1>Receivers of gifts:</h1>
+						<h2>Receivers of gifts:</h2>
 						{shuffledMemberData.map((member, ind) => (
-							<h6 key={ind}> {member.name}</h6>
+							<div
+								className='grid-cell'
+								key={ind}
+							>
+								<h6>{member.name}</h6>
+							</div>
 						))}
 					</div>
 				</div>
-				<Button onClick={onClickShuffleAndCheck}>Shuffle</Button>
-				<Button onClick={onClickBack}>Back</Button>
+				<div className='draw-button-container'>
+					<Button onClick={onClickShuffleAndCheck}>Shuffle</Button>
+					<Button onClick={onClickBack}>Back</Button>
+				</div>
 			</div>
 		</div>
 	);

@@ -7,16 +7,11 @@ Rails.application.routes.draw do
   get '/user-member-data', to: 'user_members#show'
   namespace :api do
     namespace :v1 do
-      resources :events do
-        resources :groups do
-          resources :members
-          resources :pairs
-        end
+      resources :events
+      resources :wishlists, only: %i[create] do
+        resources :wishes, only: %i[destroy]
       end
-      resources :wishlists do
-        resources :wishes
-      end
-      resources :gifts
+      resources :gifts, only: %i[create]
       get '/own-wishlist', to: 'wishlists#show_own'
     end
   end

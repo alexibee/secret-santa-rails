@@ -63,12 +63,15 @@ const Wishlist = () => {
 					{!giftWishes.length ? (
 						<div> Your list is empty</div>
 					) : (
-						<div>
+						<div className='wishlist-grid'>
 							{giftWishes.map((giftWish) => (
-								<div key={giftWish.gift.id}>
+								<div
+									className='grid-cell'
+									key={giftWish.gift.id}
+								>
 									<h4>{giftWish.gift.name}</h4>
 									<Link onClick={onDeleteClick(giftWish.wish[0].id)}>
-										Delete gift
+										Delete
 									</Link>
 								</div>
 							))}

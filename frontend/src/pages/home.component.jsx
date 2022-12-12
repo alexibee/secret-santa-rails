@@ -4,7 +4,7 @@ const Home = () => {
 	return (
 		<div className='welcome-container'>
 			<div>
-				<h1>Organising a Secret Santa Event?</h1>
+				<h1> Organising a Secret Santa Event?</h1>
 				<Link to='create-event'>LET'S START!</Link>
 			</div>
 		</div>

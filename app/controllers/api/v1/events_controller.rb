@@ -14,23 +14,14 @@ class Api::V1::EventsController < ApplicationController
       @members = @event.members
       @member = @members.find_by(user_id: current_user.id)
       if @member
-        @pairs = @member.pairs
-        @pair = @pairs.find_by(giver_id: @member.id)
-        @receiver = @members.find_by(id: @pair.receiver_id)
-        @receivers_wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
-        if @receivers_wishlist
-          @receivers_gifts = @receivers_wishlist.gifts
-        else
-          @receivers_gifts = []
-        end
+        set_receiver_data
       else
         @receiver = nil
       end
-      render json: [@event, @members, {receiver: @receiver, rec_wishlist: @receivers_gifts}], status: :ok
+      render json: { event: @event, members: @members, receiver_data: { receiver: @receiver, rec_wishlist: @receivers_gifts } }, status: :ok
     else
-      render json: {error: {message: 'Unauthorized'}}, status: :unauthorized
+      render json: { error: { message: 'Unauthorized' } }, status: :unauthorized
     end
-
   end
 
   def create
@@ -90,6 +81,18 @@ class Api::V1::EventsController < ApplicationController
       if !@pair.save
         render json: @pair.errors, status: :unprocessable_entity
       end
+    end
+  end
+
+  def set_receiver_data
+    @pairs = @member.pairs
+    @pair = @pairs.find_by(giver_id: @member.id)
+    @receiver = @members.find_by(id: @pair.receiver_id)
+    @receivers_wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
+    if @receivers_wishlist
+      @receivers_gifts = @receivers_wishlist.gifts
+    else
+      @receivers_gifts = []
     end
   end
 

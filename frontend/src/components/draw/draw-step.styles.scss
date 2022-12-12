@@ -2,15 +2,30 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 100vh;
 }
 
 .draw-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	margin: 50px auto;
+	text-align: center;
+	color: white;
+	.grid-cell {
+		border: 4px solid rgba(0, 0, 0, 0.3);
+		margin: 4px;
+	}
 
+	h2 {
+		font-size: 30px;
+	}
 	h6 {
 		font-size: 30px;
 	}
+}
+
+.draw-button-container {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	padding: 0 100px;
 }

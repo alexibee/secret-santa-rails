@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/button/button.component';
 import DrawStep from '../components/draw/draw-step.component';
@@ -20,6 +19,7 @@ import {
 	setDataTransferSuccess,
 	setPairsDetails,
 } from '../store/santa-event/santa-event.action';
+import { createEvent } from '../utils/fetch.utils';
 
 const CreateEvent = () => {
 	const dispatch = useDispatch();
@@ -43,21 +43,15 @@ const CreateEvent = () => {
 			});
 			console.log(pairs);
 			dispatch(setPairsDetails(pairs));
-			const data = await axios.post(
-				'http://localhost:4000/api/v1/events',
-				{
-					event: {
-						event: santaEvent,
-						members: memberData,
-						pairs: pairs,
-					},
-				},
-				{
-					headers: {
-						Authorization: authToken,
-					},
-				}
-			);
+			const eventPayload = {
+				event: santaEvent,
+				members: memberData,
+				pairs: pairs,
+			};
+			const data = await createEvent({
+				token: authToken,
+				eventPayload: eventPayload,
+			});
 			dispatch(setDataTransferSuccess);
 			dispatch(resetEventToInitialState());
 			console.log('event created');
@@ -76,6 +70,7 @@ const CreateEvent = () => {
 				<GroupStep id='groupf' />
 				<DrawStep id='draw' />
 				<Button
+					disabled={!shuffledMemberData}
 					type='submit'
 					addClass={currentPage === 3 ? '' : ' d-none'}
 				>

@@ -1,5 +1,4 @@
 class Api::V1::WishlistsController < ApplicationController
-  before_action :set_wishlist, only: %i[show]
 
   def create
     @wishlist = Wishlist.new(wishlist_params)

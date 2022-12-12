@@ -15,15 +15,25 @@
 	cursor: pointer;
 	text-align: center;
 	margin: 15px;
+	transform: translateZ(0);
+	transition: transform 0.25s ease-out;
 	&:hover {
+		transform: scale(1.05);
 		background-color: rgba(17, 70, 8, 1);
-		color: black;
 		border: 1px solid rgba(14, 50, 8, 0.9);
+	}
+	&:active {
+		color: lightgrey;
+		background-color: rgb(14, 55, 7);
 	}
 	&:disabled,
 	&[disabled] {
-		border: 1px solid #999999;
-		background-color: #8f8e8e;
-		color: #666666;
+		border: 1px solid #7a7a7a;
+		background-color: #ada2a2;
+		color: #837979;
+		opacity: 0.6;
+		&:hover {
+			transform: none;
+		}
 	}
 }
