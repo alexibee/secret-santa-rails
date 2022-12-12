@@ -1,5 +1,4 @@
 class Api::V1::GiftsController < ApplicationController
-
   def create
     @wishlist = Wishlist.find_by(user_id: current_user.id)
     @gift = Gift.new(gift_params)

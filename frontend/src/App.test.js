@@ -1,4 +1,4 @@
-import axios from './lib/axios.js';
+import axios from 'axios';
 // import { registerUserRequest } from './utils/auth.utils';
 
 // const registeredEmail = `${Math.random()}@example.com`;
@@ -16,17 +16,16 @@ jest.mock('axios');
 describe('createEvent', () => {
 	describe('when API call is successful', () => {
 		it('should return created event', async () => {
-			const event = {
-				id: 15,
-				title: 'yeah',
-				description: 'yeah',
-				location: 'yeah',
-				date: '2022-12-02',
-				created_at: '2022-12-11T23:55:26.812Z',
-				updated_at: '2022-12-11T23:55:26.812Z',
-				organiser_id: 25,
+			const mockResponse = {
+				event: {
+					title: 'yeah',
+					description: 'yeah',
+					location: 'yeah',
+					date: '2022-12-02',
+				},
 			};
-			axios.post.mockResolvedValueOnce(event);
+
+			axios.post.mockResolvedValueOnce(mockResponse);
 			const eventPayload = {
 				event: {
 					title: 'yeah',
@@ -45,28 +44,45 @@ describe('createEvent', () => {
 					{ giver_nr: 3, receiver_nr: 1, exclusion: false },
 				],
 			};
-			const token =
-				'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNSIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY3MDgwMTYwMCwiZXhwIjoxNjcwODA1MjAwLCJqdGkiOiI0ZDlmNjk4YS1iM2Y4LTRkYjQtOGI4NS0yZjc1MzNlMmExMjQifQ.2muLXZxIov-9-AhTUmOMfiHKpfMmyDsIAVxHsAF4ecI';
+			const token = 'token';
 			// when
 			const result = await createEvent({ token, eventPayload });
 
 			// then
-			expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/events`);
-			expect(result).toEqual(event);
+			expect(axios.post).toHaveBeenCalledWith(
+				`${BASE_URL}/events`,
+				{ event: eventPayload },
+				{
+					headers: { Authorization: token },
+				}
+			);
+			expect(result.event.title).toEqual('yeah');
 		});
 	});
 
-	describe('when API call fails', () => {
-		it('should return null', async () => {
-			const message = 'Unprocessable entity';
-			const error = new Error(message);
-			error.code = 422;
-			axios.post.mockRejectedValueOnce(error);
+	// describe('when API call fails', () => {
+	// 	it('should throw', async () => {
+	// 		const eventPayload = {
+	// 			event: {
+	// 				description: 'yeah',
+	// 				location: 'yeah',
+	// 				date: '2022-12-02',
+	// 			},
+	// 		};
+	// 		const token = 'token';
+	// 		const result = await createEvent({ token, eventPayload });
+	// 		expect(axios.post).toHaveBeenCalledWith(
+	// 			`${BASE_URL}/events`,
+	// 			{ event: eventPayload },
+	// 			{ headers: { Authorization: token } }
+	// 		);
+	// 		axios.post.mockRejectedValueOnce({
+	// 			title: ["can't be blank"],
+	// 		});
 
-			const result = await createEvent({});
-
-			expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/events`);
-			expect(result).toEqual([]);
-		});
-	});
+	// 		expect(result).toBe({
+	// 			title: ["can't be blank"],
+	// 		});
+	// 	});
+	// });
 });
