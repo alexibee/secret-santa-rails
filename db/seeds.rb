@@ -25,8 +25,8 @@ names.each do |name|
   user = User.new(email: "#{name}@example.com", password: "secret")
   user.save!
   p "user #{user.id} created"
-  users << {name: name, id: user.id}
-  x+=1
+  users << { name: name, id: user.id }
+  x += 1
 end
 
 # ------------------ WISHLISTS
@@ -43,26 +43,11 @@ end
 
 # ------------------ WISHES & GIFTS
 
-gift_names = ['banana', 'coal', 'xmas tree', 'box', 'orange', 'socks', 'makeup', 'flowers', 'hat', 'sweater']
-# items = ['slippers', 'cat', 'dog', 'parrot', 'icicle', 'santa costume', 'pat on the back', 'glasses']
+items = ['banana', 'coal', 'xmas tree', 'box', 'orange', 'socks', 'makeup', 'flowers', 'hat', 'sweater']
+
+wishes = ['slippers', 'cat', 'dog', 'parrot', 'icicle', 'santa costume', 'pat on the back', 'glasses']
 
 gifts = []
-
-gift_names.each do |item|
-  gift = Gift.new(name: item)
-  gift.save!
-  p "gift #{gift.id} created"
-  gifts << gift
-end
-
-wishlists.each do |list|
-  gift = gifts.sample
-  wish = Wish.new(wishlist_id: list.id, name: gift.name, gift_id: gift.id)
-  p "wish #{wish.id} created"
-  wish.save!
-end
-
-# -------------------- EVENTS & GROUPS & MEMBERS & PAIRS
 
 i = 1
 users[3..6].each do |user|
@@ -72,24 +57,44 @@ users[3..6].each do |user|
   group = Group.new(event_id: event.id, name: 'Group 1')
   group.save!
   p "group #{group.id} created"
+  items.each do |item|
+    gift = Gift.new(name: item, price: rand(3..15) + rand.round(2), url: "https://picsum.photos/id/#{rand(1..200)}", user_id: user[:id])
+    gift.save!
+    p "gift #{gift.id} created"
+    gifts << gift
+  end
   j = 1
   members = []
   4.times do
-    users[i*j-1][:name]
-    member = Member.new(group_id: group.id, name:  users[i*j-1][:name], member_nr: "Member#{j}", user_id: users[i*j-1][:id], email: "#{users[i*j-1][:name]}@example.com"  )
+    users[i * j - 1][:name]
+    member = Member.new(group_id: group.id, name: users[i * j - 1][:name], member_nr: "Member#{j}", user_id: users[i * j - 1][:id], email: "#{users[i * j - 1][:name]}@example.com"  )
     member.save!
     p "member #{member.id} created"
     members << member
-    j+=1
+    j += 1
+  end
+
+  wishlists.each do |list|
+    5.times do
+      chance = rand(2)
+      gift = chance.positive? ? gifts.sample : nil
+      if gift
+        wish = Wish.new(wishlist_id: list.id, name: gift.name, gift_id: gift.id, price: gift.price, url: gift.url)
+      else
+        wish = Wish.new(wishlist_id: list.id, name: wishes.sample, gift_id: nil, url: "https://picsum.photos/id/#{rand(1..200)}", price: rand(3..15) + rand.round(2))
+      end
+      p "wish #{wish.id} created"
+      wish.save!
+    end
   end
 
   2.times do |k|
-    pair1 = Pair.new(receiver_id: members[2*k].id, giver_id: members[2*k+1].id, exclusion: false, group_id: group.id)
-    pair2 = Pair.new(receiver_id: members[2*k+1].id, giver_id: members[2*k].id, exclusion: false, group_id: group.id)
+    pair1 = Pair.new(receiver_id: members[2 * k].id, giver_id: members[2 * k + 1].id, exclusion: false)
+    pair2 = Pair.new(receiver_id: members[2 * k + 1].id, giver_id: members[2 * k].id, exclusion: false)
     pair1.save!
     p "pair #{pair1.id} created"
     pair2.save!
     p "pair #{pair2.id} created"
   end
-  i+=1
+  i += 1
 end

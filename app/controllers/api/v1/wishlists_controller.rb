@@ -13,14 +13,11 @@ class Api::V1::WishlistsController < ApplicationController
   def show_own
     @wishlist = Wishlist.find_by(user_id: current_user.id)
     if @wishlist
-      @gifts = Gift.includes(:wishes).where(wishes: {wishlist_id: @wishlist.id})
-      @gift_wishes = @gifts.map do |gift|
-        {gift: gift, wish: gift.wishes}
-      end
+      @wishes = @wishlist.wishes
     else
       @wishlist = nil
     end
-    render json: [@wishlist, @gift_wishes], status: :ok
+    render json: { wishlist: @wishlist, wishes: @wishes }, status: :ok
   end
 
   private

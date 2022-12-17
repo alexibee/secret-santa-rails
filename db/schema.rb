@@ -27,8 +27,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
 
   create_table "gifts", force: :cascade do |t|
     t.string "name"
+    t.integer "price"
+    t.string "url"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_gifts_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -62,12 +66,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
   create_table "pairs", force: :cascade do |t|
     t.bigint "giver_id", null: false
     t.bigint "receiver_id", null: false
-    t.bigint "group_id", null: false
     t.boolean "exclusion", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["giver_id"], name: "index_pairs_on_giver_id"
-    t.index ["group_id"], name: "index_pairs_on_group_id"
     t.index ["receiver_id"], name: "index_pairs_on_receiver_id"
   end
 
@@ -83,8 +85,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
 
   create_table "wishes", force: :cascade do |t|
     t.string "name"
+    t.integer "price"
+    t.string "url"
     t.bigint "wishlist_id", null: false
-    t.bigint "gift_id", null: false
+    t.bigint "gift_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["gift_id"], name: "index_wishes_on_gift_id"
@@ -100,10 +104,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_231450) do
   end
 
   add_foreign_key "events", "users", column: "organiser_id"
+  add_foreign_key "gifts", "users"
   add_foreign_key "groups", "events"
   add_foreign_key "members", "groups"
   add_foreign_key "members", "users"
-  add_foreign_key "pairs", "groups"
   add_foreign_key "pairs", "members", column: "giver_id"
   add_foreign_key "pairs", "members", column: "receiver_id"
   add_foreign_key "wishes", "gifts"

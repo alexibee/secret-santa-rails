@@ -11,4 +11,5 @@ class User < ApplicationRecord
   has_many :members
   has_one :wishlist, dependent: :destroy
   has_many :wishes, through: :wishlist
+  has_many :gifts
 end

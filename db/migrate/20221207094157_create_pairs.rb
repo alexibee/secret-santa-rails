@@ -3,7 +3,6 @@ class CreatePairs < ActiveRecord::Migration[7.0]
     create_table :pairs do |t|
       t.references :giver, null: false, foreign_key: { to_table: :members }
       t.references :receiver, null: false, foreign_key: { to_table: :members }
-      t.references :group, null: false, foreign_key: true
       t.boolean :exclusion, default: false
 
       t.timestamps
