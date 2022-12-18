@@ -77,7 +77,7 @@ class Api::V1::EventsController < ApplicationController
     event_params[:pairs].each do |pair|
       @giver = @group.members.find_by(member_nr: pair['giver_nr'])
       @receiver = @group.members.find_by(member_nr: pair['receiver_nr'])
-      @pair = Pair.new(group_id: @group.id, giver_id: @giver.id, receiver_id: @receiver.id, exclusion: pair['exclusion'] )
+      @pair = Pair.new(giver_id: @giver.id, receiver_id: @receiver.id, exclusion: pair['exclusion'])
       if !@pair.save
         render json: @pair.errors, status: :unprocessable_entity
       end

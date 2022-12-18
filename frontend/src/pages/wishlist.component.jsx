@@ -25,8 +25,8 @@ const Wishlist = () => {
 					},
 				}
 			);
-			setOwnWishlist(data.data[0]);
-			setGiftWishes(data.data[1]);
+			setOwnWishlist(data.data.wishlist);
+			setGiftWishes(data.data.wishes);
 		} catch (error) {
 			console.error(error);
 		}
@@ -67,12 +67,10 @@ const Wishlist = () => {
 							{giftWishes.map((giftWish) => (
 								<div
 									className='grid-cell'
-									key={giftWish.gift.id}
+									key={giftWish.id}
 								>
-									<h4>{giftWish.gift.name}</h4>
-									<Link onClick={onDeleteClick(giftWish.wish[0].id)}>
-										Delete
-									</Link>
+									<h4>{giftWish.name}</h4>
+									<Link onClick={onDeleteClick(giftWish.id)}>Delete</Link>
 								</div>
 							))}
 						</div>
