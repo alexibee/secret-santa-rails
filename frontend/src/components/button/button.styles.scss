@@ -7,7 +7,7 @@
 	line-height: 50px;
 	padding: 0 35px 0 35px;
 	font-size: 15px;
-	background-color: rgb(17, 70, 8);
+	background-color: #f74e4d;
 	color: white;
 	text-transform: uppercase;
 	font-weight: bolder;
@@ -19,12 +19,12 @@
 	transition: transform 0.25s ease-out;
 	&:hover {
 		transform: scale(1.05);
-		background-color: rgba(17, 70, 8, 1);
-		border: 1px solid rgba(14, 50, 8, 0.9);
+		background-color: #f74e4d;
+		border: 1px solid rgba(247, 78, 77, 0.9);
 	}
 	&:active {
 		color: lightgrey;
-		background-color: rgb(14, 55, 7);
+		background-color: #f74e4d;
 	}
 	&:disabled,
 	&[disabled] {

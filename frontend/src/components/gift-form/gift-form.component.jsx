@@ -1,19 +1,25 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoadingContext } from '../../contexts/loading.context';
 import { WishlistContext } from '../../contexts/wishlist.context';
 import { selectAuthToken } from '../../store/auth/auth.selector';
+import {
+	setDataTransferError,
+	setDataTransferStart,
+	setDataTransferSuccess,
+} from '../../store/wishlist/wishlist.action';
+import { selectWishlist } from '../../store/wishlist/wishlist.selector';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
 const GiftForm = () => {
 	const authToken = useSelector(selectAuthToken);
+	const wishlist = useSelector(selectWishlist).wishlist;
 	const blankFormFields = { giftName: '' };
-
+	const dispatch = useDispatch();
 	const [formFields, setFormFields] = useState(blankFormFields);
 	const { setGift } = useContext(WishlistContext);
-	const { setIsLoading } = useContext(LoadingContext);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
@@ -25,12 +31,14 @@ const GiftForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
+		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.post(
-				`http://localhost:4000/api/v1/gifts`,
+				`http://localhost:4000/api/v1/wishlists/${wishlist.id}/wishes`,
 				{
-					name: formFields['giftName'],
+					name: formFields['wishName'],
+					price: formFields['wishPrice'],
+					url: formFields['wishUrl'],
 				},
 				{
 					headers: {
@@ -38,11 +46,11 @@ const GiftForm = () => {
 					},
 				}
 			);
-			setGift(data.data[0]);
 			resetFormFields();
-			setIsLoading(false);
+			dispatch(setDataTransferSuccess());
 		} catch (err) {
 			console.error(err);
+			dispatch(setDataTransferError(err));
 		}
 	};
 
@@ -53,8 +61,24 @@ const GiftForm = () => {
 					type='text'
 					required
 					placeholder='Name of the gift you would like to add'
-					name='giftName'
+					name='wishName'
 					value={formFields['giftName']}
+					onChange={handleChange}
+				/>
+				<FormInput
+					type='text'
+					required
+					placeholder='Approx price'
+					name='wishPrice'
+					value={formFields['wishPrice']}
+					onChange={handleChange}
+				/>
+				<FormInput
+					type='text'
+					required
+					placeholder='URL'
+					name='wishUrl'
+					value={formFields['wishUrl']}
 					onChange={handleChange}
 				/>
 				<Button type='submit'>Add!</Button>

@@ -14,7 +14,13 @@ export const WishlistReducer = (
 
 	switch (type) {
 		case WISHLIST_ACTION_TYPES.SET_WISHLIST:
-			return { ...state, wishlist: payload };
+			return { ...state, wishlist: payload, isLoading: false };
+		case WISHLIST_ACTION_TYPES.DATA_TRANSFER_FAIL:
+			return { ...state, error: payload, isLoading: false };
+		case WISHLIST_ACTION_TYPES.DATA_TRANSFER_START:
+			return { ...state, isLoading: true };
+		case WISHLIST_ACTION_TYPES.DATA_TRANSFER_SUCCESS:
+			return { ...state, isLoading: false };
 		default:
 			return state;
 	}

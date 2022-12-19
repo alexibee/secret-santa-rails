@@ -1,21 +1,25 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import GiftForm from '../components/gift-form/gift-form.component';
 import WishlistForm from '../components/wishlist-form/wishlist-form.component';
-import { WishlistContext } from '../contexts/wishlist.context';
 import { Link } from 'react-router-dom';
-import { LoadingContext } from '../contexts/loading.context';
 import { selectAuthToken } from '../store/auth/auth.selector';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectWishlist } from '../store/wishlist/wishlist.selector';
+import {
+	setDataTransferError,
+	setDataTransferStart,
+	setDataTransferSuccess,
+	setWishlist,
+} from '../store/wishlist/wishlist.action';
 
 const Wishlist = () => {
-	const [ownWishlist, setOwnWishlist] = useState(null);
-	const [giftWishes, setGiftWishes] = useState([]);
-	const { isLoading, setIsLoading } = useContext(LoadingContext);
-	const { gift } = useContext(WishlistContext);
+	const wishlistData = useSelector(selectWishlist);
+	const dispatch = useDispatch();
 	const authToken = useSelector(selectAuthToken);
 
 	const getWishlist = async () => {
+		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.get(
 				'http://localhost:4000/api/v1/own-wishlist',
@@ -25,52 +29,52 @@ const Wishlist = () => {
 					},
 				}
 			);
-			setOwnWishlist(data.data.wishlist);
-			setGiftWishes(data.data.wishes);
+			console.log(data.data);
+			dispatch(setWishlist(data.data));
 		} catch (error) {
+			dispatch(setDataTransferError(error));
 			console.error(error);
 		}
 	};
 
 	const onDeleteClick = (id) => async () => {
-		setIsLoading(true);
+		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.delete(
-				`http://localhost:4000/api/v1/wishlists/${ownWishlist.id}/wishes/${id}`,
+				`http://localhost:4000/api/v1/wishlists/${wishlistData.wishlist.id}/wishes/${id}`,
 				{
 					headers: {
 						Authorization: authToken,
 					},
 				}
 			);
-			setIsLoading(false);
-			console.log(data);
+			dispatch(setDataTransferSuccess());
 		} catch (error) {
+			dispatch(setDataTransferError(error));
 			console.error(error);
 		}
 	};
-	useEffect(() => {}, []);
 
 	useEffect(() => {
 		getWishlist();
-	}, [gift, isLoading]);
+	}, []);
 
 	return (
 		<div>
-			{!!ownWishlist ? (
+			{!!wishlistData ? (
 				<div className='wishlist-container'>
-					<h1>{ownWishlist.name}:</h1>
-					{!giftWishes.length ? (
+					<h1>{wishlistData.wishlist.name}:</h1>
+					{!wishlistData.wishes.length ? (
 						<div> Your list is empty</div>
 					) : (
 						<div className='wishlist-grid'>
-							{giftWishes.map((giftWish) => (
+							{wishlistData.wishes.map((wish) => (
 								<div
 									className='grid-cell'
-									key={giftWish.id}
+									key={wish.id}
 								>
-									<h4>{giftWish.name}</h4>
-									<Link onClick={onDeleteClick(giftWish.id)}>Delete</Link>
+									<h4>{wish.name}</h4>
+									<Link onClick={onDeleteClick(wish.id)}>Delete</Link>
 								</div>
 							))}
 						</div>

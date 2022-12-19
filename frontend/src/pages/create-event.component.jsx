@@ -32,7 +32,7 @@ const CreateEvent = () => {
 
 	const onClickHappy = async (e) => {
 		e.preventDefault();
-		dispatch(setDataTransferStart);
+		dispatch(setDataTransferStart());
 		try {
 			const pairs = memberData.map((member, ind) => {
 				return {
@@ -52,7 +52,7 @@ const CreateEvent = () => {
 				token: authToken,
 				eventPayload: eventPayload,
 			});
-			dispatch(setDataTransferSuccess);
+			dispatch(setDataTransferSuccess());
 			dispatch(resetEventToInitialState());
 			console.log('event created');
 			dispatch(setCurrentPage(1));
