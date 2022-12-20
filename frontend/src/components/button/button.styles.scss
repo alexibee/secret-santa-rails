@@ -1,4 +1,5 @@
 .button-container {
+	font-family: 'Poppins';
 	border-radius: 50px;
 	min-width: 165px;
 	width: auto;
@@ -20,7 +21,7 @@
 	&:hover {
 		transform: scale(1.05);
 		background-color: #f74e4d;
-		border: 1px solid rgba(247, 78, 77, 0.9);
+		border: 1px solid rgba(189, 34, 34, 1);
 	}
 	&:active {
 		color: lightgrey;

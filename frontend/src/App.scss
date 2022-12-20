@@ -109,10 +109,23 @@
 .welcome-container {
 	padding: 100px;
 	margin: 0 auto;
+	canvas {
+		display: block;
+		vertical-align: bottom;
+	}
 	div {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+	h1 {
+		font-family: 'Festive';
+		font-size: 80px;
+	}
+	h2 {
+	}
+	img {
+		height: 320px;
 	}
 	a {
 		text-decoration: none;
@@ -124,7 +137,7 @@
 		line-height: 50px;
 		padding: 0 35px 0 35px;
 		font-size: 15px;
-		background-color: rgb(17, 70, 8);
+		background-color: #f74e4d;
 		color: white;
 		text-transform: uppercase;
 		font-weight: bolder;
@@ -136,12 +149,12 @@
 		transition: transform 0.25s ease-out;
 		&:hover {
 			transform: scale(1.05);
-			background-color: rgba(17, 70, 8, 1);
-			border: 1px solid rgba(14, 50, 8, 0.9);
+			background-color: #f74e4d;
+			border: 1px solid rgba(189, 34, 34, 1);
 		}
 		&:active {
 			color: lightgrey;
-			background-color: rgb(14, 55, 7);
+			background-color: #f74e4d;
 		}
 		&:disabled,
 		&[disabled] {
