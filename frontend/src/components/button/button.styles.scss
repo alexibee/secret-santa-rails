@@ -16,16 +16,17 @@
 	cursor: pointer;
 	text-align: center;
 	margin: 15px;
-	transform: translateZ(0);
+	border: 1px solid rgba(189, 34, 34, 1);
+	box-shadow: 0px 10px 18px 0px rgba(189, 34, 34, 1);
 	transition: transform 0.25s ease-out;
 	&:hover {
 		transform: scale(1.05);
 		background-color: #f74e4d;
-		border: 1px solid rgba(189, 34, 34, 1);
 	}
 	&:active {
 		color: lightgrey;
 		background-color: #f74e4d;
+		border: 2px solid rgb(158, 60, 60);
 	}
 	&:disabled,
 	&[disabled] {

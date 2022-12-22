@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoadingContext } from '../../contexts/loading.context';
-import { WishlistContext } from '../../contexts/wishlist.context';
 import { selectAuthToken } from '../../store/auth/auth.selector';
 import {
 	setDataTransferError,
@@ -16,10 +14,9 @@ import FormInput from '../form-input/form-input.component';
 const GiftForm = () => {
 	const authToken = useSelector(selectAuthToken);
 	const wishlist = useSelector(selectWishlist).wishlist;
-	const blankFormFields = { giftName: '' };
+	const blankFormFields = { wishName: '', wishPrice: '', wishUrl: '' };
 	const dispatch = useDispatch();
 	const [formFields, setFormFields] = useState(blankFormFields);
-	const { setGift } = useContext(WishlistContext);
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
@@ -62,7 +59,7 @@ const GiftForm = () => {
 					required
 					placeholder='Name of the gift you would like to add'
 					name='wishName'
-					value={formFields['giftName']}
+					value={formFields['wishName']}
 					onChange={handleChange}
 				/>
 				<FormInput

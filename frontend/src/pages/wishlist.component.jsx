@@ -29,7 +29,6 @@ const Wishlist = () => {
 					},
 				}
 			);
-			console.log(data.data);
 			dispatch(setWishlist(data.data));
 		} catch (error) {
 			dispatch(setDataTransferError(error));
@@ -48,6 +47,7 @@ const Wishlist = () => {
 					},
 				}
 			);
+			getWishlist();
 			dispatch(setDataTransferSuccess());
 		} catch (error) {
 			dispatch(setDataTransferError(error));
@@ -62,23 +62,25 @@ const Wishlist = () => {
 	return (
 		<div>
 			{!!wishlistData ? (
-				<div className='wishlist-container'>
-					<h1>{wishlistData.wishlist.name}:</h1>
-					{!wishlistData.wishes.length ? (
-						<div> Your list is empty</div>
-					) : (
-						<div className='wishlist-grid'>
-							{wishlistData.wishes.map((wish) => (
-								<div
-									className='grid-cell'
-									key={wish.id}
-								>
-									<h4>{wish.name}</h4>
-									<Link onClick={onDeleteClick(wish.id)}>Delete</Link>
-								</div>
-							))}
-						</div>
-					)}
+				<div className='wishlist-container four-three-fr'>
+					<div className='wishlist-list'>
+						<h1>{wishlistData.wishlist.name}:</h1>
+						{!wishlistData.wishes.length ? (
+							<div> Your list is empty</div>
+						) : (
+							<div className='wishlist-grid'>
+								{wishlistData.wishes.map((wish) => (
+									<div
+										className='grid-cell'
+										key={wish.id}
+									>
+										<h4>{wish.name}</h4>
+										<Link onClick={onDeleteClick(wish.id)}> &#10006; </Link>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
 					<GiftForm />
 				</div>
 			) : (

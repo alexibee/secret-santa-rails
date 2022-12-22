@@ -16,6 +16,7 @@ import {
 import CreateEvent from './pages/create-event.component';
 import { setCurrentPage } from './store/pagination/pagination.action';
 import { resetEventToInitialState } from './store/santa-event/santa-event.action';
+import Landing from './pages/landing.component';
 
 function App() {
 	const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function App() {
 			<Routes>
 				<Route
 					path='/'
-					element={!!authToken ? <Home /> : <Auth />}
+					element={!!authToken ? <Home /> : <Landing />}
 				/>
 				<Route
 					path='/create-event'
