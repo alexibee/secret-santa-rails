@@ -1,5 +1,4 @@
 class Api::V1::WishlistsController < ApplicationController
-
   def create
     @wishlist = Wishlist.new(wishlist_params)
     @wishlist.user_id = current_user.id
