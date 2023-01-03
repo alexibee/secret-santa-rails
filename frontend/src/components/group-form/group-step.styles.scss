@@ -7,13 +7,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	form {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
 }
 .participant-line {
 	display: flex;
 	justify-content: space-around;
+	.group {
+		margin: 0 10px;
+	}
 }

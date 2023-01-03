@@ -36,3 +36,8 @@ export const selectSantaEventError = createSelector(
 	[selectSantaEventReducer],
 	(santaEventSlice) => santaEventSlice.error
 );
+
+export const selectSantaEventIsLoading = createSelector(
+	[selectSantaEventReducer],
+	(santaEventSlice) => santaEventSlice.isLoading
+);

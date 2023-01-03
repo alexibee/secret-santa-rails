@@ -5,17 +5,22 @@ import WishlistForm from '../components/wishlist-form/wishlist-form.component';
 import { Link } from 'react-router-dom';
 import { selectAuthToken } from '../store/auth/auth.selector';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectWishlist } from '../store/wishlist/wishlist.selector';
+import {
+	selectWishlist,
+	selectWishlistIsLoading,
+} from '../store/wishlist/wishlist.selector';
 import {
 	setDataTransferError,
 	setDataTransferStart,
 	setDataTransferSuccess,
 	setWishlist,
 } from '../store/wishlist/wishlist.action';
+import Spinner from '../components/spinner/spinner.component';
 
 const Wishlist = () => {
 	const wishlistData = useSelector(selectWishlist);
 	const dispatch = useDispatch();
+	const isLoading = useSelector(selectWishlistIsLoading);
 	const authToken = useSelector(selectAuthToken);
 
 	const getWishlist = async () => {
@@ -59,7 +64,9 @@ const Wishlist = () => {
 		getWishlist();
 	}, []);
 
-	return (
+	return isLoading ? (
+		<Spinner />
+	) : (
 		<div>
 			{!!wishlistData ? (
 				<div className='wishlist-container four-three-fr'>

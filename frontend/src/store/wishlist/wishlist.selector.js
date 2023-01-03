@@ -6,3 +6,7 @@ export const selectWishlist = createSelector(
 	[selectWishlistReducer],
 	(wishlistSlice) => wishlistSlice.wishlist
 );
+export const selectWishlistIsLoading = createSelector(
+	[selectWishlistReducer],
+	(wishlistSlice) => wishlistSlice.isLoading
+);

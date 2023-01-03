@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import SnowParticles from '../components/snow-particles/snow-particles.component';
 
 const Home = () => {
 	return (

@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../store/pagination/pagination.action';
 import { selectCurrentPage } from '../../store/pagination/pagination.selector';
-import { setShuffledMemberData } from '../../store/santa-event/santa-event.action';
 import {
-	selectGroupDetails,
+	setDataTransferStart,
+	setDataTransferSuccess,
+	setShuffledMemberData,
+} from '../../store/santa-event/santa-event.action';
+import {
 	selectMemberData,
+	selectSantaEventIsLoading,
 	selectShuffledMemberData,
 } from '../../store/santa-event/santa-event.selector';
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 import './draw-step.styles.scss';
 
 const DrawStep = () => {
@@ -16,6 +21,7 @@ const DrawStep = () => {
 	const dispatch = useDispatch();
 	const shuffledMemberData = useSelector(selectShuffledMemberData) || [];
 	const memberData = useSelector(selectMemberData) || [];
+	const isLoading = useSelector(selectSantaEventIsLoading);
 
 	const shuffleArray = (array) => {
 		for (let i = array.length - 1; i > 0; i--) {
@@ -57,6 +63,8 @@ const DrawStep = () => {
 		e.preventDefault();
 		dispatch(setCurrentPage(2));
 	};
+
+	useEffect(() => {}, [isLoading]);
 
 	return (
 		<div className={`draw-container${currentPage !== 3 ? ' d-none' : ''}`}>

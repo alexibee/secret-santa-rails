@@ -37,8 +37,6 @@ function App() {
 		}
 	}, [authToken]);
 
-	useEffect(() => {}, []);
-
 	return (
 		<div className='App'>
 			<Navbar />

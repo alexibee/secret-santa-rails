@@ -29,27 +29,31 @@ const Events = () => {
 			<div>
 				<h1>Your organised events</h1>
 				<div className='events-grid'>
-					{orgEvents.map((orgEvent) => (
-						<div
-							key={orgEvent.id}
-							className='grid-cell'
-						>
-							<Link to={`${orgEvent.id}`}>{orgEvent.title}</Link>
-						</div>
-					))}
+					{orgEvents && orgEvents.length
+						? orgEvents.map((orgEvent) => (
+								<div
+									key={orgEvent.id}
+									className='grid-cell'
+								>
+									<Link to={`${orgEvent.id}`}>{orgEvent.title}</Link>
+								</div>
+						  ))
+						: 'no events yet'}
 				</div>
 			</div>
 			<div>
 				<h1> Events you participate in</h1>
 				<div className='events-grid'>
-					{partEvents.map((partEvent) => (
-						<div
-							key={partEvent.id}
-							className='grid-cell'
-						>
-							<Link to={`${partEvent.id}`}>{partEvent.title}</Link>
-						</div>
-					))}
+					{partEvents && partEvents.length
+						? partEvents.map((partEvent) => (
+								<div
+									key={partEvent.id}
+									className='grid-cell'
+								>
+									<Link to={`${partEvent.id}`}>{partEvent.title}</Link>
+								</div>
+						  ))
+						: 'no events yet'}
 				</div>
 			</div>
 		</div>
