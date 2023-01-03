@@ -71,11 +71,29 @@ const Wishlist = () => {
 							<div className='wishlist-grid'>
 								{wishlistData.wishes.map((wish) => (
 									<div
-										className='grid-cell'
+										className='grid-row'
 										key={wish.id}
 									>
-										<h4>{wish.name}</h4>
-										<Link onClick={onDeleteClick(wish.id)}> &#10006; </Link>
+										<div className='grid-cell'>
+											<h4>
+												{wish.name} (£{wish.price})
+											</h4>
+											<Link
+												onClick={onDeleteClick(wish.id)}
+												className='delete-cell'
+											>
+												&#10006;
+											</Link>
+										</div>
+										<div className='grid-cell'>
+											<a
+												href={wish.url}
+												target='_blank'
+												rel='noreferrer'
+											>
+												link to item
+											</a>
+										</div>
 									</div>
 								))}
 							</div>

@@ -2,6 +2,25 @@
 	display: none;
 }
 
+::-webkit-scrollbar {
+	-webkit-appearance: none;
+	width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: rgba(124, 171, 210, 0.7);
+	box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+	&:active {
+		background-color: rgba(124, 171, 210, 0.8);
+	}
+}
+
+::-webkit-scrollbar-track {
+	background: rgba(209, 222, 232, 0.4);
+	border-radius: 5px;
+}
+
 .event-container {
 	color: white;
 	padding-top: 20px;
@@ -10,11 +29,10 @@
 	grid-template-columns: 1fr 1fr;
 	.events-grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
 		margin: 20px 20px;
 	}
 	.grid-cell {
-		border: 4px solid rgba(0, 0, 0, 0.3);
 		margin: 4px;
 		padding: 20px;
 	}
@@ -35,18 +53,15 @@
 	color: white;
 
 	.headers-container {
-		border: 4px solid rgba(0, 0, 0, 0.3);
 		margin: 4px;
 		padding: 20px;
 	}
 	.participants-container {
-		border: 4px solid rgba(0, 0, 0, 0.3);
 		margin: 4px;
 		padding: 20px;
 		font-size: 24px;
 	}
 	.receiver-info {
-		border: 4px solid rgba(0, 0, 0, 0.3);
 		margin: 4px;
 		padding: 20px;
 		font-size: 24px;
@@ -57,7 +72,7 @@
 	}
 	a {
 		text-decoration: none;
-		font-size: 24px;
+		font-size: 20px;
 		color: white;
 		&:hover {
 			color: lightgrey;
@@ -76,26 +91,47 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		h1 {
+			margin-bottom: 20px;
+		}
 	}
 	.wishlist-grid {
-		overflow: scroll;
+		overflow-y: scroll;
+		direction: rtl;
 		height: 600px;
 		padding: 2px 30px;
 		width: 60%;
 		background-color: #9dd1fb;
 		border-radius: 10px;
-		.grid-cell {
-			display: flex;
-			align-items: center;
-			margin: 0;
-			font-family: 'Festive';
-			font-size: 24px;
-			letter-spacing: 8px;
-			a {
-				letter-spacing: 1px;
-				font-family: 'Poppins';
-				text-decoration: none;
-				font-size: 12px;
+		.grid-row {
+			margin-bottom: 10px;
+			.grid-cell {
+				direction: ltr;
+				display: flex;
+				align-items: center;
+				margin: 0;
+				font-family: 'Festive';
+				font-size: 24px;
+				letter-spacing: 8px;
+				.delete-cell {
+					letter-spacing: 1px;
+					font-family: 'Poppins';
+					text-decoration: none;
+					font-size: 18px;
+					margin-left: 16px;
+					&:hover {
+						color: rgb(242, 235, 235);
+					}
+				}
+				a {
+					letter-spacing: 1px;
+					font-family: 'Poppins';
+					text-decoration: none;
+					font-size: 10px;
+					&:hover {
+						color: rgb(242, 235, 235);
+					}
+				}
 			}
 		}
 	}

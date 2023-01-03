@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :events
       resources :wishlists, only: %i[create] do
-        resources :wishes, only: %i[destroy]
+        resources :wishes, only: %i[create destroy]
       end
       resources :gifts, only: %i[create]
       get '/own-wishlist', to: 'wishlists#show_own'
