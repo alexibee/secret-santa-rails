@@ -45,6 +45,7 @@
 		}
 	}
 }
+
 .event-show-container {
 	padding: 20px;
 	display: flex;
@@ -87,6 +88,7 @@
 	margin-top: 20px;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	.wishlist-list {
 		display: flex;
 		flex-direction: column;
@@ -160,6 +162,7 @@
 		align-items: center;
 	}
 }
+
 .welcome-container {
 	padding: 100px;
 	margin: 0 auto;
@@ -216,6 +219,7 @@
 		}
 	}
 }
+
 .home-container {
 	padding: 100px;
 	margin: 0 auto;

@@ -24,7 +24,6 @@ const Wishlist = () => {
 	const authToken = useSelector(selectAuthToken);
 
 	const getWishlist = async () => {
-		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.get(
 				'http://localhost:4000/api/v1/own-wishlist',
@@ -61,14 +60,16 @@ const Wishlist = () => {
 	};
 
 	useEffect(() => {
+		dispatch(setDataTransferStart());
 		getWishlist();
-	}, []);
+		dispatch(setDataTransferSuccess());
+	}, [isLoading]);
 
 	return isLoading ? (
 		<Spinner />
 	) : (
 		<div>
-			{!!wishlistData ? (
+			{!!wishlistData && !!wishlistData.wishlist ? (
 				<div className='wishlist-container four-three-fr'>
 					<div className='wishlist-list'>
 						<h1>{wishlistData.wishlist.name}:</h1>

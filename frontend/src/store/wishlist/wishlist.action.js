@@ -12,3 +12,6 @@ export const setDataTransferStart = () =>
 
 export const setDataTransferSuccess = () =>
 	createAction(WISHLIST_ACTION_TYPES.DATA_TRANSFER_SUCCESS);
+
+export const setWish = (payload) =>
+	createAction(WISHLIST_ACTION_TYPES.SET_WISH, payload);

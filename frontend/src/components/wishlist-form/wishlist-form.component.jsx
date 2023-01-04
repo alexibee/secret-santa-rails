@@ -1,16 +1,21 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
-import { LoadingContext } from '../../contexts/loading.context';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import './wishlist-form.styles.scss';
 import { selectAuthToken } from '../../store/auth/auth.selector';
+import {
+	setDataTransferError,
+	setDataTransferStart,
+	setDataTransferSuccess,
+	setWishlist,
+} from '../../store/wishlist/wishlist.action';
 
 const WishlistForm = () => {
 	const blankFormFields = { wishlistName: '' };
 	const authToken = useSelector(selectAuthToken);
-	const { setIsLoading } = useContext(LoadingContext);
+	const dispatch = useDispatch();
 	const [formFields, setFormFields] = useState(blankFormFields);
 
 	const handleChange = (event) => {
@@ -24,7 +29,7 @@ const WishlistForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
+		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.post(
 				`http://localhost:4000/api/v1/wishlists`,
@@ -37,10 +42,12 @@ const WishlistForm = () => {
 					},
 				}
 			);
+			dispatch(setWishlist(data.data));
 			resetFormFields();
 			window.alert('created!');
-			setIsLoading(false);
+			dispatch(setDataTransferSuccess());
 		} catch (err) {
+			dispatch(setDataTransferError(err));
 			console.error(err);
 		}
 	};
