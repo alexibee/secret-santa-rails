@@ -6,15 +6,17 @@ import { setEventDetails } from '../../store/santa-event/santa-event.action';
 import { selectSantaEventDetails } from '../../store/santa-event/santa-event.selector';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
+import DatePicker from 'react-datepicker';
 import './event-step.styles.scss';
 
 const EventStep = () => {
 	const currentPage = useSelector(selectCurrentPage);
 	const dispatch = useDispatch();
+	const startDate = new Date();
 
 	const blankFormFields = {
 		title: '',
-		date: '',
+		date: startDate,
 		location: '',
 		description: '',
 	};
@@ -30,6 +32,9 @@ const EventStep = () => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
 	};
+	const handleDateChange = (date) => {
+		setFormFields({ ...formFields, date: date });
+	};
 
 	const onClickNext = (e) => {
 		e.preventDefault();
@@ -38,6 +43,15 @@ const EventStep = () => {
 	};
 
 	const buttonDisabled = !(title && date && location);
+
+	const CustomDateInput = ({ value, onClick }) => (
+		<FormInput
+			label='Date'
+			value={value}
+			onClick={onClick}
+			onChange={() => {}}
+		/>
+	);
 
 	return (
 		<div
@@ -59,13 +73,21 @@ const EventStep = () => {
 				onChange={handleChange}
 				value={description}
 			/>
-			<FormInput
-				label='Date'
-				type='date'
-				required
+			<DatePicker
 				name='date'
-				onChange={handleChange}
-				value={date}
+				selected={new Date(date)}
+				minDate={startDate}
+				onChange={handleDateChange}
+				customInput={<CustomDateInput />}
+				required
+				popperModifiers={[
+					{
+						name: 'offset',
+						options: {
+							offset: [30, -30],
+						},
+					},
+				]}
 			/>
 			<FormInput
 				label='Location'

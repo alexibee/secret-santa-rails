@@ -24,6 +24,7 @@ const Wishlist = () => {
 	const authToken = useSelector(selectAuthToken);
 
 	const getWishlist = async () => {
+		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.get(
 				'http://localhost:4000/api/v1/own-wishlist',
@@ -34,6 +35,7 @@ const Wishlist = () => {
 				}
 			);
 			dispatch(setWishlist(data.data));
+			dispatch(setDataTransferSuccess());
 		} catch (error) {
 			dispatch(setDataTransferError(error));
 			console.error(error);
@@ -60,10 +62,8 @@ const Wishlist = () => {
 	};
 
 	useEffect(() => {
-		dispatch(setDataTransferStart());
 		getWishlist();
-		dispatch(setDataTransferSuccess());
-	}, [isLoading]);
+	}, []);
 
 	return isLoading ? (
 		<Spinner />
@@ -107,13 +107,13 @@ const Wishlist = () => {
 							</div>
 						)}
 					</div>
-					<GiftForm />
+					<GiftForm getWishlist={getWishlist} />
 				</div>
 			) : (
 				<div className='wishlist-container'>
 					<h2>You don't have a wishlist yet</h2>
 					<h3>Create one now!</h3>
-					<WishlistForm />
+					<WishlistForm getWishlist={getWishlist} />
 				</div>
 			)}
 		</div>

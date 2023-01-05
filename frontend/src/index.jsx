@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { WishlistProvider } from './contexts/wishlist.context';
 import { LoadingProvider } from './contexts/loading.context';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

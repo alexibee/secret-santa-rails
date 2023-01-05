@@ -11,7 +11,7 @@ import { selectWishlist } from '../../store/wishlist/wishlist.selector';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
-const GiftForm = () => {
+const GiftForm = ({ getWishlist }) => {
 	const authToken = useSelector(selectAuthToken);
 	const wishlist = useSelector(selectWishlist).wishlist;
 	const blankFormFields = { wishName: '', wishPrice: '', wishUrl: '' };
@@ -44,6 +44,7 @@ const GiftForm = () => {
 				}
 			);
 			resetFormFields();
+			getWishlist();
 			dispatch(setDataTransferSuccess());
 		} catch (err) {
 			console.error(err);

@@ -12,7 +12,7 @@ import {
 	setWishlist,
 } from '../../store/wishlist/wishlist.action';
 
-const WishlistForm = () => {
+const WishlistForm = ({ getWishlist }) => {
 	const blankFormFields = { wishlistName: '' };
 	const authToken = useSelector(selectAuthToken);
 	const dispatch = useDispatch();
@@ -45,6 +45,7 @@ const WishlistForm = () => {
 			dispatch(setWishlist(data.data));
 			resetFormFields();
 			window.alert('created!');
+			getWishlist();
 			dispatch(setDataTransferSuccess());
 		} catch (err) {
 			dispatch(setDataTransferError(err));
