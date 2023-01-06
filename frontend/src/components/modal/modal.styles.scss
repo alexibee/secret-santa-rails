@@ -1,0 +1,25 @@
+.modal-bground {
+	z-index: 2;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -30px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.modal-wrapper {
+	width: fit-content;
+	padding: 50px;
+	height: fit-content;
+	box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+	border-radius: 20px;
+	background: #f74e4d;
+	color: black;
+	z-index: 10;
+}

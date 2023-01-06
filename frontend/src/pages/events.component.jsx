@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../store/auth/auth.selector';
+import Spinner from '../components/spinner/spinner.component';
+import { selectSantaEventIsLoading } from '../store/santa-event/santa-event.selector';
 
 const Events = () => {
 	const [orgEvents, setOrgEvents] = useState([]);
 	const [partEvents, setPartEvents] = useState([]);
+	const isLoading = useSelector(selectSantaEventIsLoading);
 	const authToken = useSelector(selectAuthToken);
 
 	const getEvents = async () => {
@@ -24,7 +27,9 @@ const Events = () => {
 		getEvents();
 	}, []);
 
-	return (
+	return isLoading ? (
+		<Spinner />
+	) : (
 		<div className='event-container'>
 			<div>
 				<h1>Your organised events</h1>

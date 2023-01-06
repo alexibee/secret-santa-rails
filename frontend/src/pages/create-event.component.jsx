@@ -41,7 +41,6 @@ const CreateEvent = () => {
 					exclusion: false,
 				};
 			});
-			console.log(pairs);
 			dispatch(setPairsDetails(pairs));
 			const eventPayload = {
 				event: santaEvent,

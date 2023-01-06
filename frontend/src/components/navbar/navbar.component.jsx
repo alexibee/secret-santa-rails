@@ -22,27 +22,42 @@ const Navbar = () => {
 	};
 	return (
 		!!authToken && (
-			<div className='navbar'>
-				<a href='/'>Home</a>
-				<div>
-					<Link
-						className='nav-right'
-						to='/mywishlist'
-					>
-						My wishlist
-					</Link>
-					<Link
-						to='/myevents'
-						className='nav-right'
-					>
-						My events
-					</Link>
-					<button
-						className='signOutBtn nav-right'
-						onClick={onSignOut}
-					>
-						Sign out
-					</button>
+			<div className='navbar-container'>
+				<div className='navbar'>
+					<ul>
+						<li>
+							<Link
+								className='nav-right'
+								to='/'
+							>
+								Home
+							</Link>
+						</li>
+						<li>
+							<Link
+								className='nav-right'
+								to='/mywishlist'
+							>
+								My wishlist
+							</Link>
+						</li>
+						<li>
+							<Link
+								to='/myevents'
+								className='nav-right'
+							>
+								My events
+							</Link>
+						</li>
+						<li>
+							<button
+								className='signOutBtn nav-right'
+								onClick={onSignOut}
+							>
+								Sign out
+							</button>
+						</li>
+					</ul>
 				</div>
 			</div>
 		)

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../store/auth/auth.selector';
+import Spinner from '../components/spinner/spinner.component';
+import Modal from '../components/modal/modal.component';
 
 const EventShow = () => {
 	const authToken = useSelector(selectAuthToken);
@@ -11,9 +13,11 @@ const EventShow = () => {
 	const [giftReceiver, setGiftReceiver] = useState(null);
 	const [recWishlist, setRecWishlist] = useState(null);
 	const [isVisible, setIsVisible] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const params = useParams();
 
 	const getEvent = async () => {
+		setIsLoading(true);
 		try {
 			const data = await axios.get(
 				`http://localhost:4000/api/v1/events/${params.event_id}`,
@@ -27,6 +31,7 @@ const EventShow = () => {
 			setEventMembers(data.data.members);
 			setGiftReceiver(data.data.receiver_data.receiver);
 			setRecWishlist(data.data.receiver_data.rec_wishlist);
+			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
 		}
@@ -40,7 +45,9 @@ const EventShow = () => {
 		getEvent();
 	}, []);
 
-	return (
+	return isLoading ? (
+		<Spinner />
+	) : (
 		<>
 			{secretEvent && (
 				<div className='event-show-container'>
@@ -62,18 +69,23 @@ const EventShow = () => {
 							{!isVisible ? (
 								<Link onClick={onClickWishlist}>Check their wishlist</Link>
 							) : (
-								<>
-									<h1>Their wishlist:</h1>
-									<div>
-										{!!recWishlist.length ? (
-											recWishlist.map((gift) => (
-												<p key={gift.id}>{gift.name}</p>
-											))
-										) : (
-											<h3>Nothing here yet!</h3>
-										)}
-									</div>
-								</>
+								<Modal
+									wishlist={recWishlist}
+									isVisible={isVisible}
+									setIsVisible={setIsVisible}
+								/>
+								// <>
+								// 	<h1>Their wishlist:</h1>
+								// 	<div>
+								// 		{!!recWishlist.length ? (
+								// 			recWishlist.map((gift) => (
+								// 				<p key={gift.id}>{gift.name}</p>
+								// 			))
+								// 		) : (
+								// 			<h3>Nothing here yet!</h3>
+								// 		)}
+								// 	</div>
+								// </>
 							)}
 						</div>
 					)}

@@ -1,10 +1,30 @@
+.navbar-container {
+	float: left;
+	width: max-content;
+	display: block;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+}
+
 .navbar {
 	box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.2);
 	padding: 20px;
-	display: flex;
-	justify-content: space-between;
+	width: max-content;
+	// display: flex;
+	// flex-direction: column;
+	// justify-content: space-between;
 	background-color: #79c2fe;
-	z-index: 2;
+	z-index: 3;
+	height: 100vh;
+	position: fixed;
+	margin: 0;
+	ul {
+		list-style: none;
+		li {
+			margin: 20px 0;
+		}
+	}
 	a {
 		text-decoration: none;
 		color: white;
