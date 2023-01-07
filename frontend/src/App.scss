@@ -21,6 +21,18 @@
 	border-radius: 5px;
 }
 
+.burger {
+	position: fixed;
+	font-size: 30px;
+	padding: 50px;
+	span {
+		cursor: pointer;
+		&:hover {
+			color: lightgrey;
+		}
+	}
+}
+
 .event-container {
 	color: white;
 	padding-top: 20px;

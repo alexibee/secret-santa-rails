@@ -9,7 +9,7 @@ import {
 import { setCurrentPage } from '../../store/pagination/pagination.action';
 import { resetEventToInitialState } from '../../store/santa-event/santa-event.action';
 
-const Navbar = () => {
+const Navbar = ({ isNavOpen, setIsNavOpen }) => {
 	const authToken = useSelector(selectAuthToken);
 	const dispatch = useDispatch();
 
@@ -23,35 +23,28 @@ const Navbar = () => {
 	return (
 		!!authToken && (
 			<div className='navbar-container'>
-				<div className='navbar'>
+				<div className={`navbar${isNavOpen ? ' nav-open' : ''}`}>
+					<span
+						className='close-nav'
+						onClick={() => {
+							setIsNavOpen(false);
+						}}
+					>
+						&times;
+					</span>
 					<ul>
 						<li>
-							<Link
-								className='nav-right'
-								to='/'
-							>
-								Home
-							</Link>
+							<Link to='/'>Home</Link>
 						</li>
 						<li>
-							<Link
-								className='nav-right'
-								to='/mywishlist'
-							>
-								My wishlist
-							</Link>
+							<Link to='/mywishlist'>My wishlist</Link>
 						</li>
 						<li>
-							<Link
-								to='/myevents'
-								className='nav-right'
-							>
-								My events
-							</Link>
+							<Link to='/myevents'>My events</Link>
 						</li>
 						<li>
 							<button
-								className='signOutBtn nav-right'
+								className='signOutBtn'
 								onClick={onSignOut}
 							>
 								Sign out

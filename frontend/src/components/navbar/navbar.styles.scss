@@ -3,24 +3,25 @@
 	width: max-content;
 	display: block;
 	height: 100vh;
-	padding: 0;
 	margin: 0;
+	padding: 0;
 }
 
 .navbar {
+	width: 0px;
 	box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.2);
-	padding: 20px;
-	width: max-content;
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: space-between;
+	overflow-x: hidden;
 	background-color: #79c2fe;
 	z-index: 3;
 	height: 100vh;
 	position: fixed;
 	margin: 0;
+	padding-top: 50px;
+	transition: width 0.3s linear;
+	white-space: nowrap;
 	ul {
 		list-style: none;
+		padding: 20px;
 		li {
 			margin: 20px 0;
 		}
@@ -32,6 +33,19 @@
 			color: lightgrey;
 		}
 	}
+
+	.close-nav {
+		margin: 0 0 0 140px;
+		font-size: 30px;
+		cursor: pointer;
+		&:hover {
+			color: lightgrey;
+		}
+	}
+}
+.navbar.nav-open {
+	width: 180px;
+	transition: width 0.3s linear;
 }
 .signOutBtn {
 	font-size: 16px;
@@ -43,8 +57,4 @@
 	&:hover {
 		color: white;
 	}
-}
-
-.nav-right {
-	margin: 0 10px;
 }

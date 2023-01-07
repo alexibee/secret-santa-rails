@@ -3,7 +3,7 @@ import { Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import Home from './pages/home.component';
 import Auth from './pages/auth.component';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/navbar/navbar.component';
 import Events from './pages/events.component';
 import EventShow from './pages/event-show.component';
@@ -23,6 +23,7 @@ function App() {
 	const authToken = useSelector(selectAuthToken);
 	const error = useSelector(selectAuthError);
 	const navigate = useNavigate();
+	const [isNavOpen, setIsNavOpen] = useState(false);
 
 	useEffect(() => {
 		if (authToken) {
@@ -39,7 +40,21 @@ function App() {
 
 	return (
 		<div className='App'>
-			<Navbar />
+			{!!authToken && !isNavOpen && (
+				<div className='burger'>
+					<span
+						onClick={() => {
+							setIsNavOpen(true);
+						}}
+					>
+						&#9776;
+					</span>
+				</div>
+			)}
+			<Navbar
+				isNavOpen={isNavOpen}
+				setIsNavOpen={setIsNavOpen}
+			/>
 			<Routes>
 				<Route
 					path='/'
