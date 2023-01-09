@@ -30,7 +30,18 @@ const Modal = ({ wishlist, isVisible, setIsVisible }) => {
 						<h1>Their wishlist:</h1>
 						<div>
 							{!!wishlist.length ? (
-								wishlist.map((gift) => <p key={gift.id}>{gift.name}</p>)
+								wishlist.map((gift) => (
+									<p>
+										<a
+											key={gift.id}
+											href={gift.url}
+											target='_blank'
+											rel='noreferrer'
+										>
+											- {gift.name} £{gift.price}
+										</a>
+									</p>
+								))
 							) : (
 								<h3>Nothing here yet!</h3>
 							)}
