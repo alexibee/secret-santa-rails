@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../store/auth/auth.selector';
 import Spinner from '../components/spinner/spinner.component';
 import { selectSantaEventIsLoading } from '../store/santa-event/santa-event.selector';
+import EventCard from '../components/event-card/event-card.component';
 
 const Events = () => {
 	const [orgEvents, setOrgEvents] = useState([]);
@@ -40,7 +41,9 @@ const Events = () => {
 									key={orgEvent.id}
 									className='grid-cell'
 								>
-									<Link to={`${orgEvent.id}`}>{orgEvent.title}</Link>
+									<Link to={`${orgEvent.id}`}>
+										<EventCard eventDetails={orgEvent} />
+									</Link>
 								</div>
 						  ))
 						: 'no events yet'}

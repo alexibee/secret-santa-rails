@@ -74,18 +74,6 @@ const EventShow = () => {
 									isVisible={isVisible}
 									setIsVisible={setIsVisible}
 								/>
-								// <>
-								// 	<h1>Their wishlist:</h1>
-								// 	<div>
-								// 		{!!recWishlist.length ? (
-								// 			recWishlist.map((gift) => (
-								// 				<p key={gift.id}>{gift.name}</p>
-								// 			))
-								// 		) : (
-								// 			<h3>Nothing here yet!</h3>
-								// 		)}
-								// 	</div>
-								// </>
 							)}
 						</div>
 					)}
