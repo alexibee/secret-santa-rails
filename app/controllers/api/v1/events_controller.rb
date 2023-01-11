@@ -88,9 +88,9 @@ class Api::V1::EventsController < ApplicationController
     @pairs = @member.pairs
     @pair = @pairs.find_by(giver_id: @member.id)
     @receiver = @members.find_by(id: @pair.receiver_id)
-    @receivers_wishlist = Wishlist.includes(:gifts).find_by(user_id: @receiver.user_id)
+    @receivers_wishlist = Wishlist.includes(:wishes).find_by(user_id: @receiver.user_id)
     if @receivers_wishlist
-      @receivers_gifts = @receivers_wishlist.gifts
+      @receivers_gifts = @receivers_wishlist.wishes
     else
       @receivers_gifts = []
     end
