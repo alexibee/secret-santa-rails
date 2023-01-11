@@ -7,7 +7,12 @@ const EventCard = ({ eventDetails }) => {
 		<div className='event-card'>
 			<div>
 				<h4>{eventDetails.title}</h4>
-				<p>location: {eventDetails.location}</p>
+				<p>
+					at <span>{eventDetails.location}</span>
+				</p>
+				<p>
+					<span>{eventDetails.date}</span>
+				</p>
 			</div>
 			<div></div>
 		</div>

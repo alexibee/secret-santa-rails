@@ -1,5 +1,5 @@
 import './modal.styles.scss';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from '@react-spring/web';
 import { useRef } from 'react';
 
 const Modal = ({ wishlist, isVisible, setIsVisible }) => {
@@ -17,8 +17,9 @@ const Modal = ({ wishlist, isVisible, setIsVisible }) => {
 			setIsVisible(false);
 		}
 	};
+	console.log(wishlist);
 
-	return isVisible ? (
+	return (
 		<div
 			className='modal-bground'
 			ref={modalRef}
@@ -28,28 +29,34 @@ const Modal = ({ wishlist, isVisible, setIsVisible }) => {
 				<div className='modal-wrapper'>
 					<>
 						<h1>Their wishlist:</h1>
-						<div>
-							{!!wishlist.length ? (
-								wishlist.map((gift) => (
-									<p>
-										<a
-											key={gift.id}
-											href={gift.url}
-											target='_blank'
-											rel='noreferrer'
-										>
+						<div className='wishlist-content'>
+							<ul>
+								{!!wishlist.length ? (
+									wishlist.map((gift) => (
+										<li key={gift.id}>
 											- {gift.name} £{gift.price}
-										</a>
-									</p>
-								))
-							) : (
-								<h3>Nothing here yet!</h3>
-							)}
+											{!!gift.url && (
+												<p>
+													<a
+														href={gift.url}
+														target='_blank'
+														rel='noreferrer'
+													>
+														see item
+													</a>
+												</p>
+											)}
+										</li>
+									))
+								) : (
+									<h3>Nothing here yet!</h3>
+								)}
+							</ul>
 						</div>
 					</>
 				</div>
 			</animated.div>
 		</div>
-	) : null;
+	);
 };
 export default Modal;

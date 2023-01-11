@@ -40,9 +40,13 @@
 	text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	h1 {
+		font-family: 'Festive';
+	}
 	.events-grid {
 		display: grid;
 		grid-template-columns: 1fr;
+		padding: 0 80px;
 		margin: 20px 20px;
 	}
 	.grid-cell {
@@ -64,8 +68,14 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	color: white;
-
+	min-height: 90vh;
+	width: 100%;
+	padding: 60px 300px;
+	.event-show-card {
+		background-color: #9dd1fb;
+		width: 100%;
+		border-radius: 20px;
+	}
 	.headers-container {
 		margin: 4px;
 		padding: 20px;

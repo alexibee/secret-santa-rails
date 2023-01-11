@@ -1,5 +1,11 @@
 .event-card {
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-	width: 400px;
-	height: 100px;
+	width: 100%;
+	padding: 20px;
+	height: auto;
+	border-radius: 20px;
+	background-color: #9dd1fb;
+	p {
+		font-size: 16px;
+	}
 }

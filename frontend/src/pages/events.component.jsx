@@ -38,7 +38,7 @@ const Events = () => {
 					{orgEvents && orgEvents.length
 						? orgEvents.map((orgEvent) => (
 								<div
-									key={orgEvent.id}
+									key={`org-${orgEvent.id}`}
 									className='grid-cell'
 								>
 									<Link to={`${orgEvent.id}`}>
@@ -55,10 +55,12 @@ const Events = () => {
 					{partEvents && partEvents.length
 						? partEvents.map((partEvent) => (
 								<div
-									key={partEvent.id}
+									key={`part-${partEvent.id}`}
 									className='grid-cell'
 								>
-									<Link to={`${partEvent.id}`}>{partEvent.title}</Link>
+									<Link to={`${partEvent.id}`}>
+										<EventCard eventDetails={partEvent} />
+									</Link>
 								</div>
 						  ))
 						: 'no events yet'}

@@ -8,6 +8,7 @@ import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import DatePicker from 'react-datepicker';
 import './event-step.styles.scss';
+import AutofillCheckoutDemo from '../mapbox/mapbox-search.component';
 
 const EventStep = () => {
 	const currentPage = useSelector(selectCurrentPage);
@@ -89,6 +90,7 @@ const EventStep = () => {
 					},
 				]}
 			/>
+			<AutofillCheckoutDemo />
 			<FormInput
 				label='Location'
 				type='text'
