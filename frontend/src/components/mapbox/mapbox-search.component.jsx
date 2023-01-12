@@ -86,47 +86,6 @@ export default function AutofillCheckoutDemo() {
 								id='mapbox-autofill'
 							/>
 						</AddressAutofill>
-						{!showFormExpanded && (
-							<div
-								id='manual-entry'
-								className='w180 mt6 link txt-ms border-b color-gray color-black-on-hover'
-								onClick={() => setShowFormExpanded(true)}
-							>
-								Enter an address manually
-							</div>
-						)}
-						<div
-							className='secondary-inputs'
-							style={{ display: showFormExpanded ? 'block' : 'none' }}
-						>
-							<label className='txt-s txt-bold color-gray mb3'>
-								Address Line 2
-							</label>
-							<FormInput
-								placeholder='Apartment, suite, unit, building, floor, etc.'
-								autoComplete='address-line2'
-							/>
-							<label className='txt-s txt-bold color-gray mb3'>City</label>
-							<FormInput
-								placeholder='City'
-								autoComplete='address-level2'
-							/>
-							<label className='txt-s txt-bold color-gray mb3'>
-								State / Region
-							</label>
-							<FormInput
-								placeholder='State / Region'
-								autoComplete='address-level1'
-							/>
-							<label className='txt-s txt-bold color-gray mb3'>
-								ZIP / Postcode
-							</label>
-							<FormInput
-								className='input'
-								placeholder='ZIP / Postcode'
-								autoComplete='postal-code'
-							/>
-						</div>
 					</div>
 					<div className='col col--auto-mm'>
 						{/* Visual confirmation map */}
