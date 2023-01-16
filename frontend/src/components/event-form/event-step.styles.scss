@@ -13,3 +13,25 @@
 		}
 	}
 }
+.datepicker {
+	overflow: hidden;
+	position: relative;
+	margin: 0;
+	height: 42px;
+	.react-datepicker__input-container {
+		height: 0;
+	}
+	.group {
+		width: 100%;
+		position: absolute;
+		top: -37px;
+	}
+}
+
+.mapbox {
+	color: black;
+}
+
+.map-container {
+	height: 260px;
+}

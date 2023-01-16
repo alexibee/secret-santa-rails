@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { WishlistProvider } from './contexts/wishlist.context';
 import { LoadingProvider } from './contexts/loading.context';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
