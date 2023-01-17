@@ -73,16 +73,14 @@ const EventStep = () => {
 		if (!marker.current) {
 			marker.current = new mapboxgl.Marker()
 				.setLngLat([markerLng, markerLat])
-				.addTo(map.current)
-				.setDraggable(true);
+				.addTo(map.current);
 		} else {
 			marker.current.remove();
 			marker.current = new mapboxgl.Marker()
 				.setLngLat([markerLng, markerLat])
-				.addTo(map.current)
-				.setDraggable(true);
+				.addTo(map.current);
 		}
-	});
+	}, [markerLat, markerLng]);
 
 	const handleRetrieve = useCallback(
 		(res) => {
