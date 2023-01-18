@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../store/auth/auth.selector';
 import Spinner from '../components/spinner/spinner.component';
 import Modal from '../components/modal/modal.component';
+import mapboxgl from 'mapbox-gl';
 
 const EventShow = () => {
 	const authToken = useSelector(selectAuthToken);
@@ -14,7 +15,31 @@ const EventShow = () => {
 	const [recWishlist, setRecWishlist] = useState(null);
 	const [isVisible, setIsVisible] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+
+	const mapContainer = useRef(null);
+	const map = useRef(null);
+
+	const [lng, setLng] = useState(-0.0984);
+	const [lat, setLat] = useState(51.5138);
+	const [zoom, setZoom] = useState(9);
+
 	const params = useParams();
+	console.log(mapContainer.current);
+
+	useEffect(() => {
+		const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
+		mapboxgl.accessToken = mboxAccessToken;
+	}, []);
+
+	useEffect(() => {
+		if (map.current) return;
+		map.current = new mapboxgl.Map({
+			container: mapContainer.current,
+			style: 'mapbox://styles/mapbox/streets-v12',
+			center: [lng, lat],
+			zoom: zoom,
+		});
+	}, []);
 
 	const getEvent = async () => {
 		setIsLoading(true);
@@ -52,6 +77,12 @@ const EventShow = () => {
 			{secretEvent && (
 				<div className='event-show-container'>
 					<div className='event-show-card'>
+						<div className='map-slot'>
+							<div
+								ref={mapContainer}
+								className='map-container'
+							/>
+						</div>
 						<div className='headers-container'>
 							<h1>Event: {secretEvent.title}</h1>
 							<h2>Date: {secretEvent.date}</h2>
@@ -63,22 +94,22 @@ const EventShow = () => {
 								<h4 key={eventMember.id}> {eventMember.name}</h4>
 							))}
 						</div>
-						{giftReceiver && (
-							<div className='receiver-info'>
-								<h3>Lucky receiver of your gift:</h3>
-								<h4>{giftReceiver.name}</h4>
-								{!isVisible ? (
-									<Link onClick={onClickWishlist}>Check their wishlist</Link>
-								) : (
-									<Modal
-										wishlist={recWishlist}
-										isVisible={isVisible}
-										setIsVisible={setIsVisible}
-									/>
-								)}
-							</div>
-						)}
 					</div>
+					{giftReceiver && (
+						<div className='receiver-info'>
+							<h3>Lucky receiver of your gift:</h3>
+							<h4>{giftReceiver.name}</h4>
+							{!isVisible ? (
+								<Link onClick={onClickWishlist}>Check their wishlist</Link>
+							) : (
+								<Modal
+									wishlist={recWishlist}
+									isVisible={isVisible}
+									setIsVisible={setIsVisible}
+								/>
+							)}
+						</div>
+					)}
 				</div>
 			)}
 		</>

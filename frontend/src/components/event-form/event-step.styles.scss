@@ -32,6 +32,16 @@
 	color: black;
 }
 
-.map-container {
+.mapboxgl-ctrl-geocoder {
+	top: -60px;
+	width: 380px !important;
+	height: 40px;
+	margin: 0 !important;
+	max-width: none !important;
+	border-radius: 10px !important;
+}
+
+#map-container {
 	height: 260px;
+	overflow: visible;
 }

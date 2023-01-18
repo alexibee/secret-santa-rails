@@ -8,25 +8,22 @@ import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import DatePicker from 'react-datepicker';
 import './event-step.styles.scss';
-import { AddressAutofill, config } from '@mapbox/search-js-react';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const EventStep = () => {
 	const currentPage = useSelector(selectCurrentPage);
 	const dispatch = useDispatch();
 	const startDate = new Date();
-	const [feature, setFeature] = useState();
-	const [mboxToken, setMboxToken] = useState('');
 
 	const mapContainer = useRef(null);
 	const map = useRef(null);
-	const marker = useRef(null);
 	const [lng, setLng] = useState(-0.0984);
 	const [lat, setLat] = useState(51.5138);
 	const [zoom, setZoom] = useState(9);
-
-	const [markerLng, setMarkerLng] = useState(-0.0984);
-	const [markerLat, setMarkerLat] = useState(51.5138);
+	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
+	mapboxgl.accessToken = mboxAccessToken;
 
 	const blankFormFields = {
 		title: '',
@@ -42,55 +39,64 @@ const EventStep = () => {
 	);
 	const { title, date, location, description } = formFields;
 
-	useEffect(() => {
-		const mboxAccessToken =
-			'pk.eyJ1IjoiYWxleGliZWUiLCJhIjoiY2t6OGw2dXEyMDA3cTJ2bHBwOWZuZWFrYyJ9.EpZ7ocMU8RMsom-BLai1kQ';
-		setMboxToken(mboxAccessToken);
-		mapboxgl.accessToken = mboxAccessToken;
-		config.accessToken = mboxAccessToken;
-	}, []);
+	const geocoder = new MapboxGeocoder({
+		accessToken: mboxAccessToken,
+		marker: false,
+	});
 
 	useEffect(() => {
-		if (map.current) return;
 		map.current = new mapboxgl.Map({
 			container: mapContainer.current,
 			style: 'mapbox://styles/mapbox/streets-v12',
 			center: [lng, lat],
 			zoom: zoom,
+		}).addControl(geocoder);
+	}, []);
+
+	useEffect(() => {
+		geocoder.on('result', (result) => {
+			const location = result.result.place_name;
+			setFormFields({ ...formFields, location: location });
+			// 	const marker = new mapboxgl.Marker()
+			// 		.setLngLat(result.result.center)
+			// 		.addTo(map.current);
+			// 	map.current.setZoom(12);
+			// 	map.current.setCenter(result.result.center);
+			// });
 		});
 	});
 
-	useEffect(() => {
-		if (!map.current) return;
-		map.current.on('move', () => {
-			setLng(map.current.getCenter().lng.toFixed(4));
-			setLat(map.current.getCenter().lat.toFixed(4));
-			setZoom(map.current.getZoom().toFixed(2));
-		});
-	});
+	// useEffect(() => {
+	// 	if (!map.current) return;
+	// 	map.current.on('move', () => {
+	// 		setLng(map.current.getCenter().lng.toFixed(4));
+	// 		setLat(map.current.getCenter().lat.toFixed(4));
+	// 		setZoom(map.current.getZoom().toFixed(2));
+	// 	});
+	// });
 
-	useEffect(() => {
-		if (!marker.current) {
-			marker.current = new mapboxgl.Marker()
-				.setLngLat([markerLng, markerLat])
-				.addTo(map.current);
-		} else {
-			marker.current.remove();
-			marker.current = new mapboxgl.Marker()
-				.setLngLat([markerLng, markerLat])
-				.addTo(map.current);
-		}
-	}, [markerLat, markerLng]);
+	// useEffect(() => {
+	// 	if (!marker.current) {
+	// 		marker.current = new mapboxgl.Marker()
+	// 			.setLngLat([markerLng, markerLat])
+	// 			.addTo(map.current);
+	// 	} else {
+	// 		marker.current.remove();
+	// 		marker.current = new mapboxgl.Marker()
+	// 			.setLngLat([markerLng, markerLat])
+	// 			.addTo(map.current);
+	// 	}
+	// }, [markerLat, markerLng]);
 
-	const handleRetrieve = useCallback(
-		(res) => {
-			const feature = res.features[0];
-			setMarkerLng(feature.geometry.coordinates[0]);
-			setMarkerLat(feature.geometry.coordinates[1]);
-			setFeature(feature);
-		},
-		[setFeature]
-	);
+	// const handleRetrieve = useCallback(
+	// 	(res) => {
+	// 		const feature = res.features[0];
+	// 		setMarkerLng(feature.geometry.coordinates[0]);
+	// 		setMarkerLat(feature.geometry.coordinates[1]);
+	// 		setFeature(feature);
+	// 	},
+	// 	[setFeature]
+	// );
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -156,27 +162,18 @@ const EventStep = () => {
 				]}
 			/>
 			<div className='mapbox'>
-				<div>
-					<AddressAutofill
-						accessToken={mboxToken}
-						onRetrieve={handleRetrieve}
-					>
-						<FormInput
-							placeholder='Start typing your address, e.g. 123 Main...'
-							autoComplete='street-address'
-							type='search'
-							required
-							name='location'
-							value={location}
-							onChange={handleChange}
-							id='mapbox-autofill'
-						/>
-					</AddressAutofill>
-				</div>
+				<FormInput
+					type='text'
+					required
+					name='location'
+					value={location}
+					readOnly
+				/>
 				<div
 					ref={mapContainer}
-					className='map-container'
+					id='map-container'
 				/>
+
 				{/* <div id='minimap-container'>
 					<AddressMinimap
 						canAdjustMarker={true}
