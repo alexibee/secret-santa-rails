@@ -8,22 +8,22 @@ import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 import DatePicker from 'react-datepicker';
 import './event-step.styles.scss';
-import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
+import MapboxInput from './mapbox-input.component';
 
 const EventStep = () => {
 	const currentPage = useSelector(selectCurrentPage);
 	const dispatch = useDispatch();
 	const startDate = new Date();
 
-	const mapContainer = useRef(null);
-	const map = useRef(null);
-	const [lng, setLng] = useState(-0.0984);
-	const [lat, setLat] = useState(51.5138);
-	const [zoom, setZoom] = useState(9);
-	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
-	mapboxgl.accessToken = mboxAccessToken;
+	// const mapContainer = useRef(null);
+	// const map = useRef(null);
+	// const marker = useRef(null);
+	// const [lng, setLng] = useState(-0.0984);
+	// const [lat, setLat] = useState(51.5138);
+	// const [zoom, setZoom] = useState(9);
+	// const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
+	// mapboxgl.accessToken = mboxAccessToken;
 
 	const blankFormFields = {
 		title: '',
@@ -39,71 +39,59 @@ const EventStep = () => {
 	);
 	const { title, date, location, description } = formFields;
 
-	const geocoder = new MapboxGeocoder({
-		accessToken: mboxAccessToken,
-		marker: false,
+	useEffect(() => {
+		if (santaEventDetails) {
+			setFormFields(santaEventDetails);
+		}
 	});
 
-	useEffect(() => {
-		map.current = new mapboxgl.Map({
-			container: mapContainer.current,
-			style: 'mapbox://styles/mapbox/streets-v12',
-			center: [lng, lat],
-			zoom: zoom,
-		}).addControl(geocoder);
-	}, []);
-
-	useEffect(() => {
-		geocoder.on('result', (result) => {
-			const location = result.result.place_name;
-			setFormFields({ ...formFields, location: location });
-			// 	const marker = new mapboxgl.Marker()
-			// 		.setLngLat(result.result.center)
-			// 		.addTo(map.current);
-			// 	map.current.setZoom(12);
-			// 	map.current.setCenter(result.result.center);
-			// });
-		});
-	});
-
-	// useEffect(() => {
-	// 	if (!map.current) return;
-	// 	map.current.on('move', () => {
-	// 		setLng(map.current.getCenter().lng.toFixed(4));
-	// 		setLat(map.current.getCenter().lat.toFixed(4));
-	// 		setZoom(map.current.getZoom().toFixed(2));
-	// 	});
+	// const geocoder = new MapboxGeocoder({
+	// 	accessToken: mboxAccessToken,
+	// 	marker: false,
 	// });
 
 	// useEffect(() => {
-	// 	if (!marker.current) {
-	// 		marker.current = new mapboxgl.Marker()
-	// 			.setLngLat([markerLng, markerLat])
-	// 			.addTo(map.current);
-	// 	} else {
-	// 		marker.current.remove();
-	// 		marker.current = new mapboxgl.Marker()
-	// 			.setLngLat([markerLng, markerLat])
-	// 			.addTo(map.current);
+	// 	if (map.current) return;
+	// 	map.current = new mapboxgl.Map({
+	// 		container: mapContainer.current,
+	// 		style: 'mapbox://styles/mapbox/streets-v12',
+	// 		center: [lng, lat],
+	// 		zoom: zoom,
+	// 	}).addControl(geocoder);
+	// 	if (location) {
+	// 		console.log(location);
+	// 		geocoder.setInput(location);
 	// 	}
-	// }, [markerLat, markerLng]);
+	// }, []);
 
-	// const handleRetrieve = useCallback(
-	// 	(res) => {
-	// 		const feature = res.features[0];
-	// 		setMarkerLng(feature.geometry.coordinates[0]);
-	// 		setMarkerLat(feature.geometry.coordinates[1]);
-	// 		setFeature(feature);
-	// 	},
-	// 	[setFeature]
-	// );
+	// geocoder.on('result', (result) => {
+	// 	const location = result.result.place_name;
+	// 	setFormFields({ ...formFields, location: location });
+	// 	if (marker.current) {
+	// 		marker.current.remove();
+	// 	}
+	// 	marker.current = new mapboxgl.Marker()
+	// 		.setLngLat(result.result.center)
+	// 		.addTo(map.current);
+	// 	map.current.setZoom(12);
+	// 	map.current.setCenter(result.result.center);
+	// });
+
+	// geocoder.on('clear', () => {
+	// 	if (marker.current) {
+	// 		marker.current.remove();
+	// 	}
+	// 	setFormFields({ ...formFields, location: '' });
+	// });
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormFields({ ...formFields, [name]: value });
+		dispatch(setEventDetails({ ...formFields, [name]: value }));
 	};
 	const handleDateChange = (date) => {
 		setFormFields({ ...formFields, date: date });
+		dispatch(setEventDetails({ ...formFields, date: date }));
 	};
 
 	const onClickNext = (e) => {
@@ -161,30 +149,10 @@ const EventStep = () => {
 					},
 				]}
 			/>
-			<div className='mapbox'>
-				<FormInput
-					type='text'
-					required
-					name='location'
-					value={location}
-					readOnly
-				/>
-				<div
-					ref={mapContainer}
-					id='map-container'
-				/>
-
-				{/* <div id='minimap-container'>
-					<AddressMinimap
-						canAdjustMarker={true}
-						satelliteToggle={true}
-						feature={feature || defaultFeature}
-						footer={false}
-						show={true}
-						onSaveMarkerLocation={handleSaveMarkerLocation}
-					/>
-				</div> */}
-			</div>
+			<MapboxInput
+				formFields={formFields}
+				setFormFields={setFormFields}
+			/>
 			{/* <FormInput
 				label='Location'
 				type='text'

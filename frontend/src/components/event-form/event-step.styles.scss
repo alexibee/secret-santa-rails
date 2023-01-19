@@ -39,8 +39,19 @@
 	margin: 0 !important;
 	max-width: none !important;
 	border-radius: 10px !important;
+	.mapboxgl-ctrl-geocoder--input {
+		height: 100% !important;
+		border-radius: 10px;
+	}
 }
 
+.react-datepicker-popper {
+	z-index: 3 !important;
+}
+
+#location-input {
+	opacity: 0;
+}
 #map-container {
 	height: 260px;
 	overflow: visible;

@@ -10,6 +10,7 @@ import { WishlistProvider } from './contexts/wishlist.context';
 import { LoadingProvider } from './contexts/loading.context';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
