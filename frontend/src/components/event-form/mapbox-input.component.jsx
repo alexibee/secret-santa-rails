@@ -2,26 +2,36 @@ import { useEffect, useRef, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import { setEventDetails } from '../../store/santa-event/santa-event.action';
-import { useDispatch } from 'react-redux';
+import { setSecondHalfEventDetails } from '../../store/santa-event/santa-event.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSecondSantaEventDetails } from '../../store/santa-event/santa-event.selector';
 
-const MapboxInput = ({ formFields, setFormFields }) => {
+const MapboxInput = () => {
 	const mapContainer = useRef(null);
 	const map = useRef(null);
 	const marker = useRef(null);
-	const [lng, setLng] = useState(-0.0984);
-	const [lat, setLat] = useState(51.5138);
-	const [zoom, setZoom] = useState(9);
-	const dispatch = useDispatch();
-
 	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
 	mapboxgl.accessToken = mboxAccessToken;
+	const dispatch = useDispatch();
 
+	const blankFormFields = {
+		location: '',
+		lat: 51.5138,
+		lng: -0.0984,
+	};
+
+	const santaSecondEventDetails = useSelector(selectSecondSantaEventDetails);
+
+	const [formFields, setFormFields] = useState(
+		santaSecondEventDetails || blankFormFields
+	);
+	const { lng, lat, location } = formFields;
+
+	const zoom = 9;
 	const geocoder = new MapboxGeocoder({
 		accessToken: mboxAccessToken,
 		marker: false,
 	});
-	const { location } = formFields;
 
 	useEffect(() => {
 		if (map.current) return;
@@ -31,32 +41,63 @@ const MapboxInput = ({ formFields, setFormFields }) => {
 			center: [lng, lat],
 			zoom: zoom,
 		}).addControl(geocoder);
+		if (location) {
+			geocoder.setInput(location);
+		}
 	}, []);
 
 	geocoder.on('result', (result) => {
-		const location = result.result.place_name;
-		setFormFields({ ...formFields, location: location });
-		dispatch(setEventDetails({ ...formFields, location: location }));
+		const address = result.result.place_name;
+		const coords = result.result.center;
 		if (marker.current) {
 			marker.current.remove();
 		}
-		marker.current = new mapboxgl.Marker()
-			.setLngLat(result.result.center)
-			.addTo(map.current);
+		marker.current = new mapboxgl.Marker().setLngLat(coords).addTo(map.current);
 		map.current.setZoom(12);
-		map.current.setCenter(result.result.center);
+		map.current.setCenter(coords);
+		setFormFields({ location: address, lat: coords[1], lng: coords[0] });
+		dispatch(
+			setSecondHalfEventDetails({
+				location: address,
+				lat: coords[1],
+				lng: coords[0],
+			})
+		);
 	});
 
 	geocoder.on('clear', () => {
 		if (marker.current) {
 			marker.current.remove();
 		}
-		setFormFields({ ...formFields, location: '' });
-		dispatch(setEventDetails({ ...formFields, location: '' }));
+		if (map.current) {
+			map.current
+				.setCenter([blankFormFields.lng, blankFormFields.lat])
+				.setZoom(9);
+		}
+		setFormFields(blankFormFields);
+		dispatch(setSecondHalfEventDetails(blankFormFields));
 	});
 
 	return (
 		<div className='mapbox'>
+			<FormInput
+				type='number'
+				step='0.0001'
+				required
+				name='lat'
+				value={lat}
+				id='coord-input'
+				readOnly
+			/>
+			<FormInput
+				type='number'
+				step='0.0001'
+				required
+				name='lng'
+				value={lng}
+				id='coord-input'
+				readOnly
+			/>
 			<FormInput
 				type='text'
 				required
@@ -65,6 +106,7 @@ const MapboxInput = ({ formFields, setFormFields }) => {
 				id='location-input'
 				readOnly
 			/>
+
 			<div
 				ref={mapContainer}
 				id='map-container'

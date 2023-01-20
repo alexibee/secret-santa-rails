@@ -3,5 +3,5 @@ class Event < ApplicationRecord
   has_many :members, through: :groups, dependent: :destroy
   belongs_to :user, foreign_key: :organiser_id
   has_many :users, through: :members
-  validates_presence_of :title, :location, :title, :date
+  validates_presence_of :title, :location, :date, :lng, :lat
 end

@@ -102,7 +102,7 @@ class Api::V1::EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(
-      event: [:title, :description, :location, :date],
+      event: [:title, :description, :location, :date, :lat, :lng],
       members: [ :name, :member_nr, :email ],
       pairs: [:giver_nr, :receiver_nr, :exclusion]
     )

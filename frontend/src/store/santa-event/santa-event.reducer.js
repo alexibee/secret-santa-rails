@@ -1,7 +1,8 @@
 import { SANTA_EVENT_ACTION_TYPES } from './santa-event.types';
 
 const SANTA_EVENT_INITIAL_STATE = {
-	santaEvent: null,
+	santaEventFirst: null,
+	santaEventSecond: null,
 	group: null,
 	memberCount: [1, 2, 3, 4, 5],
 	memberData: null,
@@ -18,8 +19,10 @@ export const santaEventReducer = (
 	const { type, payload } = action;
 
 	switch (type) {
-		case SANTA_EVENT_ACTION_TYPES.SET_EVENT_DETAILS:
-			return { ...state, santaEvent: payload };
+		case SANTA_EVENT_ACTION_TYPES.SET_FIRST_HALF_EVENT_DETAILS:
+			return { ...state, santaEventFirst: payload };
+		case SANTA_EVENT_ACTION_TYPES.SET_SECOND_HALF_EVENT_DETAILS:
+			return { ...state, santaEventSecond: payload };
 		case SANTA_EVENT_ACTION_TYPES.SET_GROUP_DETAILS:
 			return { ...state, group: payload };
 		case SANTA_EVENT_ACTION_TYPES.SET_MEMBER_COUNT:

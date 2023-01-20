@@ -7,8 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPage } from '../store/pagination/pagination.action';
 import { selectCurrentPage } from '../store/pagination/pagination.selector';
 import {
+	selectFirstSantaEventDetails,
 	selectMemberData,
-	selectSantaEventDetails,
+	selectSecondSantaEventDetails,
 	selectShuffledMemberData,
 } from '../store/santa-event/santa-event.selector';
 import { selectAuthToken } from '../store/auth/auth.selector';
@@ -24,11 +25,14 @@ import { createEvent } from '../utils/fetch.utils';
 const CreateEvent = () => {
 	const dispatch = useDispatch();
 	const currentPage = useSelector(selectCurrentPage);
-	const santaEvent = useSelector(selectSantaEventDetails);
+	const santaEventFirst = useSelector(selectFirstSantaEventDetails);
+	const santaEventSecond = useSelector(selectSecondSantaEventDetails);
 	const authToken = useSelector(selectAuthToken);
 	const shuffledMemberData = useSelector(selectShuffledMemberData);
 	const memberData = useSelector(selectMemberData);
 	const navigate = useNavigate();
+
+	const santaEvent = { ...santaEventFirst, ...santaEventSecond };
 
 	const onClickHappy = async (e) => {
 		e.preventDefault();

@@ -2,9 +2,13 @@ import { createSelector } from 'reselect';
 
 export const selectSantaEventReducer = (state) => state.santaEvent;
 
-export const selectSantaEventDetails = createSelector(
+export const selectFirstSantaEventDetails = createSelector(
 	[selectSantaEventReducer],
-	(santaEventSlice) => santaEventSlice.santaEvent
+	(santaEventSlice) => santaEventSlice.santaEventFirst
+);
+export const selectSecondSantaEventDetails = createSelector(
+	[selectSantaEventReducer],
+	(santaEventSlice) => santaEventSlice.santaEventSecond
 );
 
 export const selectGroupDetails = createSelector(

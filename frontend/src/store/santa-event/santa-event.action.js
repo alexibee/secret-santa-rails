@@ -1,8 +1,10 @@
 import { createAction } from '../../utils/reducer.utils';
 import { SANTA_EVENT_ACTION_TYPES } from './santa-event.types';
 
-export const setEventDetails = (payload) =>
-	createAction(SANTA_EVENT_ACTION_TYPES.SET_EVENT_DETAILS, payload);
+export const setFirstHalfEventDetails = (payload) =>
+	createAction(SANTA_EVENT_ACTION_TYPES.SET_FIRST_HALF_EVENT_DETAILS, payload);
+export const setSecondHalfEventDetails = (payload) =>
+	createAction(SANTA_EVENT_ACTION_TYPES.SET_SECOND_HALF_EVENT_DETAILS, payload);
 export const setGroupDetails = (payload) =>
 	createAction(SANTA_EVENT_ACTION_TYPES.SET_GROUP_DETAILS, payload);
 export const setMemberCount = (payload) =>

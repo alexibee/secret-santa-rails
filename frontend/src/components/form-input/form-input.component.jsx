@@ -7,13 +7,7 @@ const FormInput = ({ label, className, ...rest }) => {
 				className='form-input'
 				{...rest}
 			/>
-			{label && (
-				<label
-					className={`${rest.value.length ? 'shrink' : ''} form-input-label`}
-				>
-					{label}
-				</label>
-			)}
+			{label && <label className='form-input-label'>{label}</label>}
 		</div>
 	);
 };
