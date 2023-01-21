@@ -1,8 +1,6 @@
 import './event-card.styles.scss';
 
 const EventCard = ({ eventDetails }) => {
-	console.log(eventDetails);
-
 	return (
 		<div className='event-card'>
 			<div>
@@ -14,7 +12,6 @@ const EventCard = ({ eventDetails }) => {
 					<span>{eventDetails.date}</span>
 				</p>
 			</div>
-			<div></div>
 		</div>
 	);
 };

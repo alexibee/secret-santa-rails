@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRef } from 'react';
+import './mapbox-map.styles.scss';
 
 const MapboxMap = ({ lng, lat }) => {
 	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
@@ -8,9 +9,9 @@ const MapboxMap = ({ lng, lat }) => {
 
 	const showMap = useRef(null);
 	const mapCont = useRef(null);
-	console.log(lng, lat);
+	const marker = useRef(null);
 
-	const zoom = 12;
+	const zoom = 9;
 
 	useEffect(() => {
 		if (showMap.current) return;
@@ -19,14 +20,21 @@ const MapboxMap = ({ lng, lat }) => {
 			style: 'mapbox://styles/mapbox/streets-v12',
 			center: [lng, lat],
 			zoom: zoom,
-		});
+		}).resize();
+		if (lng && lat) {
+			marker.current = new mapboxgl.Marker()
+				.setLngLat([lng, lat])
+				.addTo(showMap.current);
+		}
 	}, []);
 
 	return (
-		<div
-			ref={mapCont}
-			id='map-container'
-		/>
+		<div className='map-show'>
+			<div
+				ref={mapCont}
+				id='map-show-container'
+			/>
+		</div>
 	);
 };
 export default MapboxMap;

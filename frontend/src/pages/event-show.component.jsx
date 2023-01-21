@@ -54,37 +54,41 @@ const EventShow = () => {
 			{secretEvent && (
 				<div className='event-show-container'>
 					<div className='event-show-card'>
-						<MapboxMap
-							lng={secretEvent.lng}
-							lat={secretEvent.lat}
-						/>
-						<div className='headers-container'>
-							<h1>Event: {secretEvent.title}</h1>
-							<h2>Date: {secretEvent.date}</h2>
-							<h2>Location: {secretEvent.location}</h2>
+						<div className='event-details'>
+							<MapboxMap
+								lng={secretEvent.lng}
+								lat={secretEvent.lat}
+							/>
+							<div className='headers-container'>
+								<h1>Event: {secretEvent.title}</h1>
+								<h2>Date: {secretEvent.date}</h2>
+								<h2>Location: {secretEvent.location}</h2>
+							</div>
 						</div>
-						<div className='participants-container'>
-							<h3>Participants of the event:</h3>
-							{eventMembers.map((eventMember) => (
-								<h4 key={eventMember.id}> {eventMember.name}</h4>
-							))}
-						</div>
-					</div>
-					{giftReceiver && (
-						<div className='receiver-info'>
-							<h3>Lucky receiver of your gift:</h3>
-							<h4>{giftReceiver.name}</h4>
-							{!isVisible ? (
-								<Link onClick={onClickWishlist}>Check their wishlist</Link>
-							) : (
-								<Modal
-									wishlist={recWishlist}
-									isVisible={isVisible}
-									setIsVisible={setIsVisible}
-								/>
+						<div className='participants-details'>
+							<div className='participants-container'>
+								<h3>Participants of the event:</h3>
+								{eventMembers.map((eventMember) => (
+									<h4 key={eventMember.id}> {eventMember.name}</h4>
+								))}
+							</div>
+							{giftReceiver && (
+								<div className='receiver-info'>
+									<h3>Lucky receiver of your gift:</h3>
+									<h4>{giftReceiver.name}</h4>
+									{!isVisible ? (
+										<Link onClick={onClickWishlist}>Check their wishlist</Link>
+									) : (
+										<Modal
+											wishlist={recWishlist}
+											isVisible={isVisible}
+											setIsVisible={setIsVisible}
+										/>
+									)}
+								</div>
 							)}
 						</div>
-					)}
+					</div>
 				</div>
 			)}
 		</>

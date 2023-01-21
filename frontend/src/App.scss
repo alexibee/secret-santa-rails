@@ -58,7 +58,7 @@
 		font-size: 24px;
 		color: white;
 		&:hover {
-			color: lightgrey;
+			color: darkgrey;
 		}
 	}
 }
@@ -75,6 +75,15 @@
 		background-color: #9dd1fb;
 		width: 100%;
 		border-radius: 20px;
+		.event-details {
+			display: flex;
+			align-items: center;
+			padding: 0 20px;
+			justify-content: space-around;
+		}
+		.participants-details {
+			display: flex;
+		}
 	}
 	.headers-container {
 		margin: 4px;
@@ -84,6 +93,7 @@
 		margin: 4px;
 		padding: 20px;
 		font-size: 24px;
+		flex-grow: 1;
 	}
 	.receiver-info {
 		margin: 4px;
@@ -91,7 +101,6 @@
 		font-size: 24px;
 	}
 	div {
-		margin: 30px 0;
 		text-align: center;
 	}
 	a {
