@@ -1,7 +1,14 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/spinner/spinner.component';
+import { selectUserIsLoading } from '../store/auth/auth.selector';
 
 const Home = () => {
-	return (
+	const isLoading = useSelector(selectUserIsLoading);
+
+	return isLoading ? (
+		<Spinner />
+	) : (
 		<div className='home-container'>
 			<div>
 				<Link to='create-event'>

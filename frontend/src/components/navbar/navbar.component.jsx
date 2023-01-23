@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.styles.scss';
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { selectAuthToken } from '../../store/auth/auth.selector';
 import {
 	resetAuthToInitialState,
@@ -12,6 +12,7 @@ import { resetEventToInitialState } from '../../store/santa-event/santa-event.ac
 const Navbar = ({ isNavOpen, setIsNavOpen }) => {
 	const authToken = useSelector(selectAuthToken);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const onSignOut = async (e) => {
 		e.preventDefault();
@@ -19,6 +20,7 @@ const Navbar = ({ isNavOpen, setIsNavOpen }) => {
 		dispatch(resetAuthToInitialState());
 		dispatch(setCurrentPage(1));
 		dispatch(resetEventToInitialState());
+		navigate('/');
 	};
 	return (
 		!!authToken && (
