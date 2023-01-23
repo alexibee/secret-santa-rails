@@ -36,7 +36,7 @@ function App() {
 			dispatch(resetEventToInitialState());
 			navigate('/');
 		}
-	}, [authToken]);
+	});
 
 	return (
 		<div className='App'>

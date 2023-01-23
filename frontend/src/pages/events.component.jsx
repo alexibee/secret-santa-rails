@@ -41,9 +41,7 @@ const Events = () => {
 									key={`org-${orgEvent.id}`}
 									className='grid-cell'
 								>
-									<Link to={`${orgEvent.id}`}>
-										<EventCard eventDetails={orgEvent} />
-									</Link>
+									<EventCard eventDetails={orgEvent} />
 								</div>
 						  ))
 						: 'no events yet'}
@@ -58,9 +56,7 @@ const Events = () => {
 									key={`part-${partEvent.id}`}
 									className='grid-cell'
 								>
-									<Link to={`${partEvent.id}`}>
-										<EventCard eventDetails={partEvent} />
-									</Link>
+									<EventCard eventDetails={partEvent} />
 								</div>
 						  ))
 						: 'no events yet'}

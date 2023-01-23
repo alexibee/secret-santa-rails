@@ -21,8 +21,18 @@
 	background-color: #9dd1fb;
 	color: white;
 	z-index: 10;
+	h1 {
+		font-size: 30px;
+	}
 	.wishlist-content {
 		max-height: 60vh;
 		overflow-y: scroll;
+		padding: 0 60px;
+	}
+	ul {
+		list-style: none;
+	}
+	li {
+		font-size: 20px;
 	}
 }

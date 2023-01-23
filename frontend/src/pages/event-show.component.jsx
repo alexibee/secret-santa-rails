@@ -6,6 +6,7 @@ import { selectAuthToken } from '../store/auth/auth.selector';
 import Spinner from '../components/spinner/spinner.component';
 import Modal from '../components/modal/modal.component';
 import MapboxMap from '../components/mapbox/mapbox-map.component';
+import { format } from 'date-fns';
 
 const EventShow = () => {
 	const authToken = useSelector(selectAuthToken);
@@ -60,22 +61,35 @@ const EventShow = () => {
 								lat={secretEvent.lat}
 							/>
 							<div className='headers-container'>
-								<h1>Event: {secretEvent.title}</h1>
-								<h2>Date: {secretEvent.date}</h2>
-								<h2>Location: {secretEvent.location}</h2>
+								<h1>
+									Event: <span>{secretEvent.title}</span>
+								</h1>
+								<h2>
+									Date:
+									<span>
+										{format(new Date(secretEvent.date), 'MM-dd-yyyy')}
+									</span>
+								</h2>
+								<h2>
+									Location: <span>{secretEvent.location}</span>
+								</h2>
 							</div>
 						</div>
 						<div className='participants-details'>
 							<div className='participants-container'>
 								<h3>Participants of the event:</h3>
 								{eventMembers.map((eventMember) => (
-									<h4 key={eventMember.id}> {eventMember.name}</h4>
+									<h4 key={eventMember.id}>
+										<span>{eventMember.name}</span>
+									</h4>
 								))}
 							</div>
 							{giftReceiver && (
 								<div className='receiver-info'>
 									<h3>Lucky receiver of your gift:</h3>
-									<h4>{giftReceiver.name}</h4>
+									<h4>
+										<span>{giftReceiver.name}</span>
+									</h4>
 									{!isVisible ? (
 										<Link onClick={onClickWishlist}>Check their wishlist</Link>
 									) : (

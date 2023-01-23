@@ -6,21 +6,21 @@ const Home = () => {
 			<div>
 				<Link to='create-event'>
 					<img
-						src='santaclaws sm.png'
+						src='sflake.png'
 						alt='santa claus'
 					/>
 					<h1> Create a new event</h1>
 				</Link>
 				<Link to='/mywishlist'>
 					<img
-						src='santaclaws sm.png'
+						src='sflake.png'
 						alt='santa claus'
 					/>
 					<h1> See my wishlist </h1>
 				</Link>
 				<Link to='/myevents'>
 					<img
-						src='santaclaws sm.png'
+						src='sflake.png'
 						alt='santa claus'
 					/>
 					<h1> See my events </h1>

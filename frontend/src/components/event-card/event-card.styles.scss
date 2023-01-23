@@ -1,10 +1,20 @@
+a {
+	text-decoration: none;
+	font-size: 24px;
+	color: white;
+}
 .event-card {
+	padding: 20px;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 	width: 100%;
-	padding: 20px;
 	height: auto;
 	border-radius: 20px;
 	background-color: #9dd1fb;
+
+	&:hover {
+		transform: scale(1.05);
+		transition: transform 500ms;
+	}
 	p {
 		font-size: 16px;
 	}
