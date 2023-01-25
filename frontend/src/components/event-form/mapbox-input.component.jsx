@@ -4,7 +4,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { setSecondHalfEventDetails } from '../../store/santa-event/santa-event.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSecondSantaEventDetails } from '../../store/santa-event/santa-event.selector';
-import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 
