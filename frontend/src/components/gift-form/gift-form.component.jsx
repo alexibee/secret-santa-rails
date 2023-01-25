@@ -8,6 +8,7 @@ import {
 	setDataTransferSuccess,
 } from '../../store/wishlist/wishlist.action';
 import { selectWishlist } from '../../store/wishlist/wishlist.selector';
+import { BACKEND_URL } from '../../utils/config.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
@@ -31,7 +32,7 @@ const GiftForm = ({ getWishlist }) => {
 		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.post(
-				`http://localhost:4000/api/v1/wishlists/${wishlist.id}/wishes`,
+				`${BACKEND_URL}/api/v1/wishlists/${wishlist.id}/wishes`,
 				{
 					name: formFields['wishName'],
 					price: formFields['wishPrice'],

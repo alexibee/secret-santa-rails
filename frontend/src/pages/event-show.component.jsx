@@ -7,6 +7,7 @@ import Spinner from '../components/spinner/spinner.component';
 import Modal from '../components/modal/modal.component';
 import MapboxMap from '../components/mapbox/mapbox-map.component';
 import { format } from 'date-fns';
+import { BACKEND_URL } from '../utils/config.utils';
 
 const EventShow = () => {
 	const authToken = useSelector(selectAuthToken);
@@ -23,7 +24,7 @@ const EventShow = () => {
 		setIsLoading(true);
 		try {
 			const data = await axios.get(
-				`http://localhost:4000/api/v1/events/${params.event_id}`,
+				`${BACKEND_URL}/api/v1/events/${params.event_id}`,
 				{
 					headers: {
 						Authorization: authToken,

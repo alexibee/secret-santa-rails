@@ -1,5 +1,5 @@
 import './App.scss';
-import { Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/home.component';
 import Auth from './pages/auth.component';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../store/auth/auth.selector';
 import Spinner from '../components/spinner/spinner.component';

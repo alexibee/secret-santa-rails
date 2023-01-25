@@ -16,6 +16,7 @@ import {
 	setWishlist,
 } from '../store/wishlist/wishlist.action';
 import Spinner from '../components/spinner/spinner.component';
+import { BACKEND_URL } from '../utils/config.utils';
 
 const Wishlist = () => {
 	const wishlistData = useSelector(selectWishlist);
@@ -26,14 +27,11 @@ const Wishlist = () => {
 	const getWishlist = async () => {
 		dispatch(setDataTransferStart());
 		try {
-			const data = await axios.get(
-				'http://localhost:4000/api/v1/own-wishlist',
-				{
-					headers: {
-						Authorization: authToken,
-					},
-				}
-			);
+			const data = await axios.get(`${BACKEND_URL}/api/v1/own-wishlist`, {
+				headers: {
+					Authorization: authToken,
+				},
+			});
 			dispatch(setWishlist(data.data));
 			dispatch(setDataTransferSuccess());
 		} catch (error) {

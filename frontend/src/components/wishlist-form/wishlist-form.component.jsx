@@ -11,6 +11,7 @@ import {
 	setDataTransferSuccess,
 	setWishlist,
 } from '../../store/wishlist/wishlist.action';
+import { BACKEND_URL } from '../../utils/config.utils';
 
 const WishlistForm = ({ getWishlist }) => {
 	const blankFormFields = { wishlistName: '' };
@@ -32,7 +33,7 @@ const WishlistForm = ({ getWishlist }) => {
 		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.post(
-				`http://localhost:4000/api/v1/wishlists`,
+				`${BACKEND_URL}/api/v1/wishlists`,
 				{
 					name: formFields['wishlistName'],
 				},

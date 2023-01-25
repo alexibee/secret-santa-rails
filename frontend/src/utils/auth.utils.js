@@ -1,10 +1,9 @@
 import axios from 'axios';
-
-const BASE_URL = 'http://localhost:4000/';
+import { BACKEND_URL } from './config.utils';
 
 export const registerUserRequest = async (payload) => {
 	const { email, password, confirmPassword } = payload;
-	return await axios.post(`${BASE_URL}users`, {
+	return await axios.post(`${BACKEND_URL}/users`, {
 		user: {
 			email: email,
 			password: password,
@@ -15,7 +14,7 @@ export const registerUserRequest = async (payload) => {
 
 export const signInUserRequest = async (userInfo) => {
 	const { email, password } = userInfo;
-	return await axios.post(`${BASE_URL}users/sign_in`, {
+	return await axios.post(`${BACKEND_URL}/users/sign_in`, {
 		user: {
 			email: email,
 			password: password,
@@ -29,7 +28,7 @@ export const signInUserWithTokenRequest = async (authToken) => {
 			Authorization: authToken,
 		},
 	};
-	return await axios.get(`${BASE_URL}user-member-data`, config);
+	return await axios.get(`${BACKEND_URL}/user-member-data`, config);
 };
 
 export const signOutUserRequest = async (authToken) => {
@@ -38,5 +37,5 @@ export const signOutUserRequest = async (authToken) => {
 			authorization: authToken,
 		},
 	};
-	await axios.delete(`${BASE_URL}users/sign_out`, config);
+	await axios.delete(`${BACKEND_URL}/users/sign_out`, config);
 };
