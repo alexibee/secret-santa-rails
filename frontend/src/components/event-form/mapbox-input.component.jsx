@@ -12,9 +12,10 @@ const MapboxInput = () => {
 	const mapContainer = useRef(null);
 	const map = useRef(null);
 	const marker = useRef(null);
-	mapboxgl.workerClass = MapboxWorker.default;
 	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
 	mapboxgl.accessToken = mboxAccessToken;
+	mapboxgl.workerClass = MapboxWorker.default;
+
 	const dispatch = useDispatch();
 
 	const blankFormFields = {

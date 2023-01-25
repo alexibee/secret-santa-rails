@@ -9,9 +9,9 @@ const MapboxMap = ({ lng, lat }) => {
 	const showMap = useRef(null);
 	const mapCont = useRef(null);
 	const marker = useRef(null);
-	mapboxgl.workerClass = MapboxWorker.default;
 	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
 	mapboxgl.accessToken = mboxAccessToken;
+	mapboxgl.workerClass = MapboxWorker.default;
 
 	const zoom = 9;
 
