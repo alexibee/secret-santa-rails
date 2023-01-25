@@ -6,6 +6,9 @@
 
 # Ignore bundler config.
 /.bundle
+/frontend/.env
+/frontend/node_modules
+.env
 
 # Ignore all logfiles and tempfiles.
 /log/*

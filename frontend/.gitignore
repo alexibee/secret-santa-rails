@@ -13,8 +13,6 @@
 
 # misc
 .DS_Store
-/frontend/.env
-/frontend/node_modules
 .env
 .env.local
 .env.development.local
