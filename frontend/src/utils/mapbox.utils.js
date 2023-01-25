@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 
 const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
-mapboxgl.accessToken = mboxAccessToken;
+const mapBox = mapboxgl;
+mapBox.accessToken = mboxAccessToken;
 
-export const mapBox = mapboxgl;
+export { mapBox };
