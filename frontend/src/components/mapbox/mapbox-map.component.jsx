@@ -1,25 +1,30 @@
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import { mapBox } from '../../utils/mapbox.utils';
+import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import './mapbox-map.styles.scss';
 
 const MapboxMap = ({ lng, lat }) => {
 	const showMap = useRef(null);
 	const mapCont = useRef(null);
 	const marker = useRef(null);
+	mapboxgl.workerClass = MapboxWorker.default;
+	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
+	mapboxgl.accessToken = mboxAccessToken;
 
 	const zoom = 9;
 
 	useEffect(() => {
 		if (showMap.current) return;
-		showMap.current = new mapBox.Map({
+		showMap.current = new mapboxgl.Map({
 			container: mapCont.current,
 			style: 'mapbox://styles/mapbox/streets-v12',
 			center: [lng, lat],
 			zoom: zoom,
 		}).resize();
 		if (lng && lat) {
-			marker.current = new mapBox.Marker()
+			marker.current = new mapboxgl.Marker()
 				.setLngLat([lng, lat])
 				.addTo(showMap.current);
 		}

@@ -4,13 +4,17 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { setSecondHalfEventDetails } from '../../store/santa-event/santa-event.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSecondSantaEventDetails } from '../../store/santa-event/santa-event.selector';
-import { mapBox } from '../../utils/mapbox.utils';
+import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 
 const MapboxInput = () => {
 	const mapContainer = useRef(null);
 	const map = useRef(null);
 	const marker = useRef(null);
+	mapboxgl.workerClass = MapboxWorker.default;
 	const mboxAccessToken = process.env.REACT_APP_MBOX_TOKEN;
+	mapboxgl.accessToken = mboxAccessToken;
 	const dispatch = useDispatch();
 
 	const blankFormFields = {
@@ -34,9 +38,9 @@ const MapboxInput = () => {
 
 	useEffect(() => {
 		if (map.current) return;
-		map.current = new mapBox.Map({
+		map.current = new mapboxgl.Map({
 			container: mapContainer.current,
-			style: 'mapbox://styles/mapbox/streets-v8',
+			style: 'mapbox://styles/mapbox/streets-v12',
 			center: [lng, lat],
 			zoom: zoom,
 		}).addControl(geocoder);
@@ -51,7 +55,7 @@ const MapboxInput = () => {
 		if (marker.current) {
 			marker.current.remove();
 		}
-		marker.current = new mapBox.Marker().setLngLat(coords).addTo(map.current);
+		marker.current = new mapboxgl.Marker().setLngLat(coords).addTo(map.current);
 		map.current.setZoom(12);
 		map.current.setCenter(coords);
 		setFormFields({ location: address, lat: coords[1], lng: coords[0] });
