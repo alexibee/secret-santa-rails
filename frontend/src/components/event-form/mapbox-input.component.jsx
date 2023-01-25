@@ -36,7 +36,7 @@ const MapboxInput = () => {
 		if (map.current) return;
 		map.current = new mapBox.Map({
 			container: mapContainer.current,
-			style: 'mapbox://styles/mapbox/streets-v12',
+			style: 'mapbox://styles/mapbox/streets-v8',
 			center: [lng, lat],
 			zoom: zoom,
 		}).addControl(geocoder);
