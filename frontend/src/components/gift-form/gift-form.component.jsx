@@ -66,7 +66,6 @@ const GiftForm = ({ getWishlist }) => {
 				/>
 				<FormInput
 					type='text'
-					required
 					placeholder='Approx price'
 					name='wishPrice'
 					value={formFields['wishPrice']}
@@ -74,7 +73,6 @@ const GiftForm = ({ getWishlist }) => {
 				/>
 				<FormInput
 					type='text'
-					required
 					placeholder='URL'
 					name='wishUrl'
 					value={formFields['wishUrl']}
