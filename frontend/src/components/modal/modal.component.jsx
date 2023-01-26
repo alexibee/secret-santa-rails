@@ -17,7 +17,6 @@ const Modal = ({ wishlist, isVisible, setIsVisible }) => {
 			setIsVisible(false);
 		}
 	};
-	console.log(wishlist);
 
 	return (
 		<div

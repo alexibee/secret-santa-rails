@@ -7,10 +7,6 @@ const SnowParticles = () => {
 		await loadFull(engine);
 	}, []);
 
-	const particlesLoaded = useCallback(async (container) => {
-		await console.log(container);
-	}, []);
-
 	const particleOptions = {
 		fpsLimit: 120,
 		interactivity: {
@@ -144,7 +140,6 @@ const SnowParticles = () => {
 		<Particles
 			id='tsparticles'
 			init={particlesInit}
-			loaded={particlesLoaded}
 			options={particleOptions}
 		/>
 	);
