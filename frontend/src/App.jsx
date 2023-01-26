@@ -17,6 +17,7 @@ import CreateEvent from './pages/create-event.component';
 import { setCurrentPage } from './store/pagination/pagination.action';
 import { resetEventToInitialState } from './store/santa-event/santa-event.action';
 import Landing from './pages/landing.component';
+import Error404 from './pages/error404.component';
 
 function App() {
 	const dispatch = useDispatch();
@@ -76,6 +77,10 @@ function App() {
 				<Route
 					path='/mywishlist'
 					element={!!authToken ? <Wishlist /> : <Auth />}
+				/>
+				<Route
+					path='*'
+					element={<Error404 />}
 				/>
 			</Routes>
 		</div>

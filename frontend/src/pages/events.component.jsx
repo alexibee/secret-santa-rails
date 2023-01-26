@@ -5,6 +5,7 @@ import { selectAuthToken } from '../store/auth/auth.selector';
 import Spinner from '../components/spinner/spinner.component';
 import { selectSantaEventIsLoading } from '../store/santa-event/santa-event.selector';
 import EventCard from '../components/event-card/event-card.component';
+import { BACKEND_URL } from '../utils/config.utils';
 
 const Events = () => {
 	const [orgEvents, setOrgEvents] = useState([]);
@@ -13,7 +14,7 @@ const Events = () => {
 	const authToken = useSelector(selectAuthToken);
 
 	const getEvents = async () => {
-		const data = await axios.get('http://localhost:4000/api/v1/events', {
+		const data = await axios.get(`${BACKEND_URL}/api/v1/events`, {
 			headers: {
 				Authorization: authToken,
 			},

@@ -315,3 +315,18 @@
 		width: 400px;
 	}
 }
+
+.error-page {
+	height: 100vh;
+	width: 100%;
+	text-align: center;
+	z-index: 6;
+	position: fixed;
+	background-color: #f74e4d;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	h1 {
+		font-size: 100px;
+	}
+}

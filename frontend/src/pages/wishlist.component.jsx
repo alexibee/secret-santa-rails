@@ -44,7 +44,7 @@ const Wishlist = () => {
 		dispatch(setDataTransferStart());
 		try {
 			const data = await axios.delete(
-				`http://localhost:4000/api/v1/wishlists/${wishlistData.wishlist.id}/wishes/${id}`,
+				`${BACKEND_URL}/api/v1/wishlists/${wishlistData.wishlist.id}/wishes/${id}`,
 				{
 					headers: {
 						Authorization: authToken,
