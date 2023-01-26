@@ -59,7 +59,7 @@ function App() {
 			<Routes>
 				<Route
 					path='/'
-					element={!!authToken ? <Home /> : <Landing />}
+					element={!authToken ? <Landing /> : <Home />}
 				/>
 				<Route
 					path='/create-event'
